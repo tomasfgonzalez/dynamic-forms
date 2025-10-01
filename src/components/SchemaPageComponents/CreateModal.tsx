@@ -5,7 +5,7 @@ import ImportSchema from "./Modals/ImportTab";
 import ExampleSchemas from "./Modals/ExamplesTab";
 import { useSchemaModalStep } from "../../hooks/SchemaPageHooks/useModalStep";
 import type { Schema } from "../../hooks/SchemaPageHooks/useSchemas";
-import "./CreateSchemaModal.css";
+import "./CreateModal.css";
 
 interface CreateSchemaModalProps {
   isOpen: boolean;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Schema } from "../../../hooks/useSchemas";
+import { Schema } from "../../../hooks/SchemaPageHooks/useSchemas";
 
 interface Props {
   schema: Schema;

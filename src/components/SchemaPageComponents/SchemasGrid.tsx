@@ -2,8 +2,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import CreateSchemaModal from "./CreateSchemaModal";
-import { useSchemas, Schema } from "../../hooks/useSchemas";
-import { useSchemaModal } from "../../hooks/useSchemaModal";
+import { useSchemas, Schema } from "../../hooks/SchemaPageHooks/useSchemas";
+import { useSchemaModal } from "../../hooks/SchemaPageHooks/useModalState";
 import { useFadeIn } from "../../hooks/useFadeIn";
 import SchemaCard from "./Cards/SchemaCard";
 import CreateSchemaCard from "./Cards/CreateSchemaCard";
