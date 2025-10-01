@@ -1,38 +1,36 @@
-/* src/components/DataViewerComponents/TableNavigation.css */
-
-.table-navigation {
+.table-nav {
   display: flex;
-  justify-content: center; /* center horizontally */
+  justify-content: center;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  margin: 0.5rem 0;
+  gap: 0.5rem;
   font-family: Arial, sans-serif;
 }
 
-.table-navigation button {
-  padding: 0.5rem 0.8rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 500;
+.table-nav button {
+  padding: 0.3rem 0.6rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #888;
   background-color: #03e4c9ff;
   color: #fff;
-  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.table-navigation button:hover:not(:disabled) {
-  background-color: #02bfa0;
+.table-nav button:hover:not(:disabled) {
+  background-color: #02cbb1;
   transform: translateY(-1px);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-.table-navigation button:disabled {
+.table-nav button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
 
-.table-navigation span {
-  font-size: 1rem;
+.table-nav span {
+  font-size: 0.9rem;
   color: #333;
-  font-weight: 500;
 }
+

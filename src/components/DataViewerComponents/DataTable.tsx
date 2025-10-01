@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// src/components/DataViewerComponents/DataTable.tsx
+import React from "react";
 import type { SchemaField } from "../../hooks/useFormPageData";
 import "./DataTable.css";
 
@@ -12,6 +13,8 @@ interface DataTableProps {
   insertRow: (index: number) => void;
   deleteRow: (index: number) => void;
   editMode: boolean;
+  colStart: number;
+  colsPerPage: number;
 }
 
 export default function DataTable({
@@ -23,11 +26,9 @@ export default function DataTable({
   insertRow,
   deleteRow,
   editMode,
+  colStart,
+  colsPerPage,
 }: DataTableProps) {
-  const [colStart, setColStart] = useState(0);
-  const colsPerPage = 10;
-
-  const totalCols = schema.fields.length;
   const visibleFields = schema.fields.slice(colStart, colStart + colsPerPage);
   const paginatedRows = rows.slice(
     (currentPage - 1) * rowsPerPage,
@@ -69,7 +70,6 @@ export default function DataTable({
             ))}
           </tr>
         </thead>
-
         <tbody>
           {paginatedRows.map((row, rowIndex) => {
             const realIndex = (currentPage - 1) * rowsPerPage + rowIndex;
@@ -139,7 +139,7 @@ export default function DataTable({
                         style={{
                           border: getValidationMessage(value, f)
                             ? "1px solid red"
-                            : "none",
+                            : "1px solid #ccc",
                         }}
                       />
                       {getValidationMessage(value, f) && (

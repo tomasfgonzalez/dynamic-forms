@@ -17,12 +17,20 @@ const TableNavigation: React.FC<TableNavigationProps> = ({
   const canPrev = colStart > 0;
   const canNext = colStart + colsPerPage < totalCols;
 
+  const handlePrev = () => setColStart(Math.max(colStart - colsPerPage, 0));
+  const handleNext = () =>
+    setColStart(Math.min(colStart + colsPerPage, totalCols - colsPerPage));
+
   return (
     <div className="table-nav">
-      <button disabled={!canPrev} onClick={() => setColStart(colStart - 1)}>
+      <button disabled={!canPrev} onClick={handlePrev}>
         ◀
       </button>
-      <button disabled={!canNext} onClick={() => setColStart(colStart + 1)}>
+      <span>
+        Columns {colStart + 1}–{Math.min(colStart + colsPerPage, totalCols)} of{" "}
+        {totalCols}
+      </span>
+      <button disabled={!canNext} onClick={handleNext}>
         ▶
       </button>
     </div>

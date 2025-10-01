@@ -1,9 +1,8 @@
 /* src/components/DataViewerComponents/DataTable.css */
 
 .data-table-wrapper {
-  position: relative;
   width: 100%;
-  overflow: hidden;
+  overflow-x: auto;
   margin-bottom: 2rem;
   font-family: Arial, sans-serif;
 }
@@ -11,7 +10,7 @@
 .data-table {
   width: 100%;
   border-collapse: collapse;
-  text-align: left;
+  text-align: center;
 }
 
 .data-table th,
@@ -19,25 +18,35 @@
   padding: 0.5rem 0.75rem;
   border: 1px solid #ddd;
   font-size: 0.95rem;
+  vertical-align: middle;
 }
 
 .data-table th {
   background-color: #f0f0f0;
   font-weight: 600;
   color: #333;
-  text-align: center;
 }
 
 .data-table tbody tr:nth-child(even) {
   background-color: #fafafa;
 }
 
+/* Plain text cells for view mode, selectable */
+.data-cell {
+  user-select: text; /* allow copy */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Only inputs in edit mode */
 .cell-input {
   width: 100%;
-  padding: 0.3rem 0.5rem;
+  padding: 0.25rem 0.5rem;
   border-radius: 4px;
   border: 1px solid #ccc;
   font-size: 0.95rem;
+  box-sizing: border-box;
 }
 
 .cell-input:disabled {
@@ -45,68 +54,67 @@
   cursor: not-allowed;
 }
 
+/* Validation messages */
 .validation-msg {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: red;
-  margin-top: 0.2rem;
+  margin-top: 2px;
 }
 
-/* Side navigation buttons (left & right arrows fixed in center) */
-.side-column-nav {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  transform: translateY(-50%);
-  pointer-events: none; /* table still clickable */
-}
-
-.side-column-nav button {
-  pointer-events: auto; /* re-enable buttons */
-  background-color: #03e4c9ff;
-  border: none;
-  color: white;
-  padding: 0.6rem 0.9rem;
-  font-size: 1.1rem;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.side-column-nav button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-.side-column-nav button:hover:not(:disabled) {
-  background-color: #02cbb1;
-  transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-/* Row action buttons */
+/* Actions column */
 .row-buttons-cell {
   display: flex;
-  gap: 0.3rem;
+  flex-direction: row;
+  gap: 4px;
   justify-content: center;
+  align-items: center;
+  width: 120px;
+  min-width: 120px;
 }
 
 .row-buttons-cell button {
   background-color: #03e4c9ff;
   color: #fff;
   border: none;
-  padding: 0.3rem 0.6rem;
+  padding: 4px 8px;
   border-radius: 4px;
   font-size: 0.85rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  height: 32px;
+  transition: all 0.2s ease;
 }
 
 .row-buttons-cell button:hover {
   background-color: #02cbb1;
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Select dropdowns inside table */
+.data-table select {
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+}
+
+/* Checkbox cells */
+.data-table input[type="checkbox"] {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+/* Scrollbar */
+.data-table-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.data-table-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.data-table-wrapper::-webkit-scrollbar-track {
+  background: transparent;
 }
