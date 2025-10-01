@@ -1,4 +1,3 @@
-// src/pages/DataViewerPage.tsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useFormPageData from "../hooks/useFormPageData";
@@ -16,6 +15,7 @@ const DataViewerPage: React.FC = () => {
     selectedSchemaId,
     setSelectedSchemaId,
     filteredRows,
+    setRows,  // make sure this is exposed from useFormPageData
     search,
     setSearch,
     currentPage,
@@ -32,8 +32,26 @@ const DataViewerPage: React.FC = () => {
   const [colStart, setColStart] = useState(0);
   const colsPerPage = 10;
 
-  // Edit mode state
+  // Edit mode + backup state
   const [editMode, setEditMode] = useState(false);
+  const [backupRows, setBackupRows] = useState<any[]>([]);
+
+  const handleEnterEdit = () => {
+    // Deep copy rows so cancel can restore them
+    setBackupRows(JSON.parse(JSON.stringify(filteredRows)));
+    setEditMode(true);
+  };
+
+  const handleSave = () => {
+    setBackupRows([]);
+    setEditMode(false);
+  };
+
+  const handleCancel = () => {
+    setRows(backupRows); // restore
+    setBackupRows([]);
+    setEditMode(false);
+  };
 
   return (
     <div className="form-page-container">
@@ -48,10 +66,7 @@ const DataViewerPage: React.FC = () => {
             Select a schema to view and manage your data. If none exists, create
             one first!
           </p>
-          <button
-            className="hero-button"
-            onClick={() => navigate("/schemas")}
-          >
+          <button className="hero-button" onClick={() => navigate("/schemas")}>
             Go to Schemas
           </button>
         </div>
@@ -68,7 +83,7 @@ const DataViewerPage: React.FC = () => {
                 const value = e.target.value;
                 setSelectedSchemaId(value ? value : null);
                 setSearch("");
-                setColStart(0); // reset column start
+                setColStart(0);
               }}
             >
               {schemas.map((s) => (
@@ -111,8 +126,8 @@ const DataViewerPage: React.FC = () => {
               deleteRow={deleteRow}
               addRow={addRow}
               editMode={editMode}
-              colStart={colStart}      // pass colStart
-              colsPerPage={colsPerPage} // pass colsPerPage
+              colStart={colStart}
+              colsPerPage={colsPerPage}
             />
           ) : (
             <div className="no-fields-message fade-in">
@@ -123,24 +138,15 @@ const DataViewerPage: React.FC = () => {
           {/* Edit buttons */}
           <div className="edit-buttons">
             {!editMode ? (
-              <button
-                className="hero-button edit"
-                onClick={() => setEditMode(true)}
-              >
+              <button className="hero-button edit" onClick={handleEnterEdit}>
                 Edit
               </button>
             ) : (
               <>
-                <button
-                  className="hero-button save"
-                  onClick={() => setEditMode(false)}
-                >
+                <button className="hero-button save" onClick={handleSave}>
                   Save Changes
                 </button>
-                <button
-                  className="hero-button cancel"
-                  onClick={() => setEditMode(false)}
-                >
+                <button className="hero-button cancel" onClick={handleCancel}>
                   Cancel Changes
                 </button>
                 <button className="hero-button add-row" onClick={addRow}>
@@ -165,3 +171,4 @@ const DataViewerPage: React.FC = () => {
 };
 
 export default DataViewerPage;
+
