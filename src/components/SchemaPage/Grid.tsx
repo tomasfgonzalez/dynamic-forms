@@ -1,13 +1,13 @@
 // src/components/schemasPageComponents/SchemasGrid.tsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import CreateSchemaModal from "./CreateSchemaModal";
+import CreateSchemaModal from "./CreateModal";
 import { useSchemas, Schema } from "../../hooks/SchemaPageHooks/useSchemas";
 import { useSchemaModal } from "../../hooks/SchemaPageHooks/useModalState";
 import { useFadeIn } from "../../hooks/useFadeIn";
 import SchemaCard from "./Cards/SchemaCard";
 import CreateSchemaCard from "./Cards/CreateSchemaCard";
-import "./SchemasGrid.css";
+import "./Grid.css";
 
 export default function SchemasGrid() {
   const { schemas, addSchema, updateSchema, deleteSchema } = useSchemas();

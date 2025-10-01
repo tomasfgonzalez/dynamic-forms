@@ -1,7 +1,7 @@
 // src/pages/HomePage.tsx
 import React from "react";
-import HeroSection from "../components/HomePageComponents/HeroSection";
-import FeaturesSection from "../components/HomePageComponents/FeaturesSection";
+import HeroSection from "../components/HomePage/HeroSection";
+import FeaturesSection from "../components/HomePage/FeaturesSection";
 
 const HomePage: React.FC = () => {
   return (

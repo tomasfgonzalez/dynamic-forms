@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+// src/pages/DataViewerPage.tsx
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import useFormPageData from "../hooks/useFormPageData";
-import DataTable from "../components/DataViewerComponents/DataTable";
-import TableNavigation from "../components/DataViewerComponents/TableNavigation";
-import Pagination from "../components/DataViewerComponents/Pagination";
+import { useDataViewerPageLogic } from "./../hooks/useDataViewerPageLogic";
+import DataTable from "../components/DataViewer/DataTable";
+import TableNavigation from "../components/DataViewer/TableNavigation";
+import Pagination from "../components/DataViewer/Pagination";
 import "./DataViewerPage.css";
 
 const DataViewerPage: React.FC = () => {
@@ -15,7 +16,6 @@ const DataViewerPage: React.FC = () => {
     selectedSchemaId,
     setSelectedSchemaId,
     filteredRows,
-    setRows,  // make sure this is exposed from useFormPageData
     search,
     setSearch,
     currentPage,
@@ -26,32 +26,14 @@ const DataViewerPage: React.FC = () => {
     deleteRow,
     updateCell,
     goToPage,
-  } = useFormPageData();
-
-  // Column navigation state
-  const [colStart, setColStart] = useState(0);
-  const colsPerPage = 10;
-
-  // Edit mode + backup state
-  const [editMode, setEditMode] = useState(false);
-  const [backupRows, setBackupRows] = useState<any[]>([]);
-
-  const handleEnterEdit = () => {
-    // Deep copy rows so cancel can restore them
-    setBackupRows(JSON.parse(JSON.stringify(filteredRows)));
-    setEditMode(true);
-  };
-
-  const handleSave = () => {
-    setBackupRows([]);
-    setEditMode(false);
-  };
-
-  const handleCancel = () => {
-    setRows(backupRows); // restore
-    setBackupRows([]);
-    setEditMode(false);
-  };
+    colStart,
+    setColStart,
+    colsPerPage,
+    editMode,
+    handleEnterEdit,
+    handleSave,
+    handleCancel,
+  } = useDataViewerPageLogic();
 
   return (
     <div className="form-page-container">
@@ -59,13 +41,9 @@ const DataViewerPage: React.FC = () => {
         Form Viewer
       </h1>
 
-      {/* No schemas message */}
       {schemas.length === 0 && (
         <div className="no-schemas-message fade-in">
-          <p>
-            Select a schema to view and manage your data. If none exists, create
-            one first!
-          </p>
+          <p>Select a schema to view and manage your data. If none exists, create one first!</p>
           <button className="hero-button" onClick={() => navigate("/schemas")}>
             Go to Schemas
           </button>
@@ -74,7 +52,6 @@ const DataViewerPage: React.FC = () => {
 
       {schemas.length > 0 && selectedSchema && (
         <>
-          {/* Schema selector */}
           <div className="schema-selector">
             <label>Select Schema:</label>
             <select
@@ -94,7 +71,6 @@ const DataViewerPage: React.FC = () => {
             </select>
           </div>
 
-          {/* Search bar */}
           <div className="search-bar">
             <input
               type="text"
@@ -104,7 +80,6 @@ const DataViewerPage: React.FC = () => {
             />
           </div>
 
-          {/* Table navigation */}
           {selectedSchema.fields.length > colsPerPage && (
             <TableNavigation
               colStart={colStart}
@@ -114,7 +89,6 @@ const DataViewerPage: React.FC = () => {
             />
           )}
 
-          {/* Data table */}
           {selectedSchema.fields.length > 0 ? (
             <DataTable
               schema={selectedSchema}
@@ -135,28 +109,18 @@ const DataViewerPage: React.FC = () => {
             </div>
           )}
 
-          {/* Edit buttons */}
           <div className="edit-buttons">
             {!editMode ? (
-              <button className="hero-button edit" onClick={handleEnterEdit}>
-                Edit
-              </button>
+              <button className="hero-button edit" onClick={handleEnterEdit}>Edit</button>
             ) : (
               <>
-                <button className="hero-button save" onClick={handleSave}>
-                  Save Changes
-                </button>
-                <button className="hero-button cancel" onClick={handleCancel}>
-                  Cancel Changes
-                </button>
-                <button className="hero-button add-row" onClick={addRow}>
-                  Add Row
-                </button>
+                <button className="hero-button save" onClick={handleSave}>Save Changes</button>
+                <button className="hero-button cancel" onClick={handleCancel}>Cancel Changes</button>
+                <button className="hero-button add-row" onClick={addRow}>Add Row</button>
               </>
             )}
           </div>
 
-          {/* Pagination */}
           <div className="pagination-container">
             <Pagination
               currentPage={currentPage}
@@ -171,4 +135,3 @@ const DataViewerPage: React.FC = () => {
 };
 
 export default DataViewerPage;
-

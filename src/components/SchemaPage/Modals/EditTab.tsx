@@ -2,7 +2,7 @@ import React from "react";
 import { Schema, SchemaField } from "../../../hooks/SchemaPageHooks/useSchemas";
 import { useSchemaFields } from "../../../hooks/SchemaPageHooks/useManageFields";
 import { useSchemaName } from "../../../hooks/SchemaPageHooks/useSchemaName";
-import "../CreateSchemaModal.css";
+import "../CreateModal.css";
 
 interface Props {
   editingSchema: Schema | null;

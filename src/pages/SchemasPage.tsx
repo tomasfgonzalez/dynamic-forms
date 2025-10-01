@@ -1,6 +1,6 @@
 // src/pages/SchemasPage.tsx
 import React, { useEffect, useState } from "react";
-import SchemasGrid from "../components/SchemaPageComponents/SchemasGrid";
+import SchemasGrid from "../components/SchemaPage/Grid";
 import "./SchemasPage.css";
 
 const SchemasPage: React.FC = () => {

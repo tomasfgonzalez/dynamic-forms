@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../CreateSchemaModal.css";
+import "../CreateModal.css";
 import type { Schema } from "../../../hooks/SchemaPageHooks/useSchemas";
 
 interface ImportSchemaProps {
