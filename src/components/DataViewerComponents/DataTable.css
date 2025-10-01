@@ -1,0 +1,112 @@
+/* src/components/DataViewerComponents/DataTable.css */
+
+.data-table-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.data-table th,
+.data-table td {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ddd;
+  font-size: 0.95rem;
+}
+
+.data-table th {
+  background-color: #f0f0f0;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+}
+
+.data-table tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.cell-input {
+  width: 100%;
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+}
+
+.cell-input:disabled {
+  background-color: #f9f9f9;
+  cursor: not-allowed;
+}
+
+.validation-msg {
+  font-size: 0.75rem;
+  color: red;
+  margin-top: 0.2rem;
+}
+
+/* Side navigation buttons (left & right arrows fixed in center) */
+.side-column-nav {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+  pointer-events: none; /* table still clickable */
+}
+
+.side-column-nav button {
+  pointer-events: auto; /* re-enable buttons */
+  background-color: #03e4c9ff;
+  border: none;
+  color: white;
+  padding: 0.6rem 0.9rem;
+  font-size: 1.1rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.side-column-nav button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.side-column-nav button:hover:not(:disabled) {
+  background-color: #02cbb1;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Row action buttons */
+.row-buttons-cell {
+  display: flex;
+  gap: 0.3rem;
+  justify-content: center;
+}
+
+.row-buttons-cell button {
+  background-color: #03e4c9ff;
+  color: #fff;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.row-buttons-cell button:hover {
+  background-color: #02cbb1;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}

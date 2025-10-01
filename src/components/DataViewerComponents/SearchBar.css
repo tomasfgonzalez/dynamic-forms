@@ -1,0 +1,36 @@
+/* src/components/formPageComponents/SearchBar.css */
+
+.search-bar-container {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.search-bar-container input[type="text"] {
+  padding: 0.4rem 0.6rem;
+  width: 100%;
+  max-width: 360px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.search-columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.search-columns label {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.search-columns input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+}

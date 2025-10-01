@@ -1,0 +1,187 @@
+/* src/pages/DataViewerPage.css */
+
+.form-page-container {
+  padding: clamp(2rem, 5vw, 3rem);
+  font-family: Arial, sans-serif;
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Page title */
+.form-page-title {
+  text-align: center;
+  margin-bottom: clamp(1rem, 3vw, 2rem);
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 700;
+  color: #00796b;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.form-page-title.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* No schemas message (centered like hero section) */
+.no-schemas-message {
+  text-align: center;
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  color: #555;
+  line-height: 1.5;
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-schemas-message p {
+  margin-bottom: 2rem;
+}
+
+/* Buttons using the new format */
+.hero-button {
+  padding: 0.5rem 0.8rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s ease;
+  margin: 0.25rem;
+}
+
+.hero-button.save {
+  background-color: #03a9f4;
+  color: #fff;
+}
+
+.hero-button.save:hover {
+  background-color: #0288d1;
+}
+
+.hero-button.cancel {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.hero-button.cancel:hover {
+  background-color: #d32f2f;
+}
+
+.hero-button.add-row {
+  background-color: #03e4c9ff;
+  color: #fff;
+}
+
+.hero-button.add-row:hover {
+  background-color: #02bfa0;
+}
+
+.hero-button.edit {
+  background-color: #03e4c9ff;
+  color: #fff;
+}
+
+.hero-button.edit:hover {
+  background-color: #02bfa0;
+}
+
+/* Schema selector */
+.schema-selector {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  justify-content: flex-start; /* top-left */
+}
+
+.schema-selector label {
+  font-weight: 600;
+  color: #333;
+  font-size: 1rem;
+}
+
+.schema-selector select {
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  color: #333;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 180px;
+}
+
+.schema-selector select:hover {
+  border-color: #03e4c9ff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.schema-selector select:focus {
+  outline: none;
+  border-color: #03e4c9ff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Search bar styling */
+.search-bar {
+  display: flex;
+  justify-content: flex-start; /* under schema, aligned left */
+  margin-bottom: 1.5rem;
+}
+
+.search-bar input {
+  padding: 0.5rem 0.7rem;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+/* Table navigation arrows container */
+.table-nav-container {
+  display: flex;
+  justify-content: center; /* centered above table */
+  margin-bottom: 0.75rem;
+}
+
+/* Edit buttons container (bottom-left) */
+.edit-buttons {
+  display: flex;
+  justify-content: flex-start; /* bottom-left */
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+/* Hide add-row button when not editing */
+.edit-buttons .add-row {
+  display: inline-block;
+}
+
+.edit-buttons:not(:has(.add-row)) .add-row {
+  display: none;
+}
+
+/* No fields message */
+.no-fields-message {
+  text-align: center;
+  font-size: 1rem;
+  color: #555;
+  margin: 1rem 0;
+}
+
+/* Pagination container */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 1rem;
+}
