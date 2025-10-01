@@ -1,8 +1,8 @@
 // src/components/schemasPageComponents/CreateSchemaModal.tsx
 import React from "react";
-import CreateFromScratch from "./modals/EditTab";
-import ImportSchema from "./modals/ImportSchema";
-import ExampleSchemas from "./modals/ExampleSchemas";
+import CreateFromScratch from "./Modals/EditTab";
+import ImportSchema from "./Modals/ImportSchema";
+import ExampleSchemas from "./Modals/ExampleSchemas";
 import { useSchemaModalStep } from "../../hooks/useSchemaModalStep";
 import type { Schema } from "../../hooks/useSchemas";
 import "./CreateSchemaModal.css";
