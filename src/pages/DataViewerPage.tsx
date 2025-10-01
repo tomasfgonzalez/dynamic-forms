@@ -26,14 +26,35 @@ const DataViewerPage: React.FC = () => {
     deleteRow,
     updateCell,
     goToPage,
+    setRows, // <-- make sure your hook exposes a way to replace rows
   } = useFormPageData();
 
-  // Column navigation state
   const [colStart, setColStart] = useState(0);
   const colsPerPage = 10;
 
-  // Edit mode state
   const [editMode, setEditMode] = useState(false);
+
+  // Backup rows for cancel
+  const [backupRows, setBackupRows] = useState<typeof filteredRows>([]);
+
+  // Enter edit mode: backup current rows
+  const handleEdit = () => {
+    setBackupRows(filteredRows.map(row => ({ ...row }))); // deep copy
+    setEditMode(true);
+  };
+
+  // Cancel changes: restore backup completely
+  const handleCancel = () => {
+    if (selectedSchemaId && setRows) {
+      setRows(backupRows.map(row => ({ ...row }))); // deep copy
+    }
+    setEditMode(false);
+  };
+
+  // Save changes: simply exit edit mode
+  const handleSave = () => {
+    setEditMode(false);
+  };
 
   return (
     <div className="form-page-container">
@@ -41,17 +62,13 @@ const DataViewerPage: React.FC = () => {
         Form Viewer
       </h1>
 
-      {/* No schemas message */}
       {schemas.length === 0 && (
         <div className="no-schemas-message fade-in">
           <p>
             Select a schema to view and manage your data. If none exists, create
             one first!
           </p>
-          <button
-            className="hero-button"
-            onClick={() => navigate("/schemas")}
-          >
+          <button className="hero-button" onClick={() => navigate("/schemas")}>
             Go to Schemas
           </button>
         </div>
@@ -88,7 +105,7 @@ const DataViewerPage: React.FC = () => {
             />
           </div>
 
-          {/* Table navigation (for columns) */}
+          {/* Table navigation */}
           {selectedSchema.fields.length > colsPerPage && (
             <TableNavigation
               colStart={colStart}
@@ -109,7 +126,7 @@ const DataViewerPage: React.FC = () => {
               insertRow={insertRow}
               deleteRow={deleteRow}
               addRow={addRow}
-              editMode={editMode} // Table is editable only in edit mode
+              editMode={editMode}
             />
           ) : (
             <div className="no-fields-message fade-in">
@@ -117,28 +134,18 @@ const DataViewerPage: React.FC = () => {
             </div>
           )}
 
-
-          {/* Edit buttons under the table (bottom-left) */}
+          {/* Edit buttons */}
           <div className="edit-buttons">
             {!editMode ? (
-              <button
-                className="hero-button edit"
-                onClick={() => setEditMode(true)}
-              >
+              <button className="hero-button edit" onClick={handleEdit}>
                 Edit
               </button>
             ) : (
               <>
-                <button
-                  className="hero-button save"
-                  onClick={() => setEditMode(false)}
-                >
+                <button className="hero-button save" onClick={handleSave}>
                   Save Changes
                 </button>
-                <button
-                  className="hero-button cancel"
-                  onClick={() => setEditMode(false)}
-                >
+                <button className="hero-button cancel" onClick={handleCancel}>
                   Cancel Changes
                 </button>
                 <button className="hero-button add-row" onClick={addRow}>
@@ -148,7 +155,6 @@ const DataViewerPage: React.FC = () => {
             )}
           </div>
 
-
           <div className="pagination-container">
             <Pagination
               currentPage={currentPage}
@@ -156,7 +162,6 @@ const DataViewerPage: React.FC = () => {
               goToPage={goToPage}
             />
           </div>
-
         </>
       )}
     </div>
@@ -164,3 +169,4 @@ const DataViewerPage: React.FC = () => {
 };
 
 export default DataViewerPage;
+

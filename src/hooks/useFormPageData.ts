@@ -80,6 +80,12 @@ export default function useFormPageData() {
     }
   };
 
+  // Set rows completely (for cancel/restore)
+  const replaceRows = (newRows: Row[]) => {
+    setRows(newRows);
+    if (selectedSchemaId) persist(selectedSchemaId, newRows);
+  };
+
   // Create an empty row
   const createEmptyRow = (): Row => {
     const row: Row = {};
@@ -192,5 +198,6 @@ export default function useFormPageData() {
     deleteRow,
     updateCell,
     goToPage,
+    setRows: replaceRows, // <-- expose setRows for DataViewerPage
   };
 }
