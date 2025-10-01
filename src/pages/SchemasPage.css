@@ -1,0 +1,35 @@
+/* src/pages/SchemasPage.css */
+
+.schemas-page {
+  padding: 2rem;
+  padding-top: 3rem; /* push content lower to avoid navbar overlap */
+  text-align: center;
+}
+
+.schemas-title {
+  font-size: clamp(1.8rem, 4vw, 2.5rem); /* responsive font size */
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: #00796b;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.schemas-description {
+  font-size: clamp(1rem, 2.5vw, 1.2rem); /* responsive font size */
+  color: #555;
+  max-width: 650px;
+  margin: 0 auto 2rem auto;
+  line-height: 1.5;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+/* Fade-in animation applied dynamically */
+.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+ 

@@ -1,0 +1,49 @@
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  /* Proportional padding with safe min/max */
+  padding: clamp(0.8rem, 2vw, 1.2rem) clamp(1rem, 5%, 2rem);
+
+  background-color: #f8f8f8;
+
+  /* Fixed positioning */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  /* Make sure content doesn't overflow */
+  box-sizing: border-box;
+}
+
+nav .brand {
+  font-weight: bold;
+  font-size: clamp(0.8rem, 2vw, 1.5rem);
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: clamp(0.8rem, 2vw, 1.5rem);
+  margin: 0;
+  padding: 0;
+
+  /* Prevent items from breaking container */
+  flex-wrap: wrap;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  font-size: clamp(0.7rem, 1.5vw, 1rem);
+  white-space: nowrap; /* prevent wrapping of single links */
+}
+
+nav ul li a:hover {
+  color: #007bff;
+}

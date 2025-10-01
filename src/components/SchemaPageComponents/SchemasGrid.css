@@ -1,0 +1,159 @@
+/* Grid container */
+.grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.grid-container.fade-in {
+  opacity: 1;
+}
+
+/* Base card style */
+.schema-card,
+.create-schema-card {
+  width: clamp(220px, 20vw, 280px);   /* smaller width */
+  height: clamp(220px, 20vw, 280px);  /* smaller height */
+  padding: 1rem;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;   /* fields start at top */
+  align-items: stretch;           /* left-align content by default */
+  position: relative;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.2s ease;
+  z-index: 1;
+}
+
+.fade-in-card {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.schema-card:hover,
+.create-schema-card:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+/* Delete cross */
+.delete-cross {
+  background: none;
+  color: #807d7d;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 4px;
+  transition: color 0.2s ease;
+}
+
+.delete-cross:hover {
+  color: #140e0e;
+}
+
+/* Card title (centered) */
+.schema-card h3 {
+  margin: 0.5rem 0;
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  color: #00796b;
+  text-align: center;   /* title in the middle */
+  width: 100%;
+}
+
+/* Fields (left-aligned) */
+.schema-fields-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start; /* left-align */
+  width: 100%;
+}
+
+.schema-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  align-items: flex-start; /* left-align */
+}
+
+.schema-field {
+  font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+  color: #333;
+  line-height: 1.2;
+  text-align: left;      /* left-aligned text */
+}
+
+/* Buttons (left-aligned) */
+.schema-card-buttons {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 0.5rem;
+  width: 100%;
+  gap: 0.3rem;
+}
+
+.schema-card-buttons button {
+  padding: 0.5rem 0.7rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #03e4c9ff;
+  color: #fff;
+  font-weight: 500;
+  font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+  transition: background 0.2s ease;
+}
+
+.schema-card-buttons button:hover {
+  background-color: #02bfa0;
+}
+
+/* Create schema card (+ icon centered) */
+.create-schema-card {
+  order: -1; /* always first */
+  font-size: clamp(2rem, 5vw, 2.5rem); /* responsive plus icon */
+  border: 2px dashed #00796b;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.create-schema-card:hover {
+  transform: scale(1.05);
+  background-color: #e0f2f1;
+}
+
+/* Modal overlay */
+.modal-page-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.35);
+  z-index: 999;
+}
+
+/* Fade-in animation */
+.fade-in {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,118 @@
+.features-section {
+  padding: clamp(2rem, 5vw, 4rem) 2rem; /* vertical padding scales */
+  text-align: center;
+  background-color: #f9f9f9;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease, transform 1s ease;
+  position: relative; /* for visual cue */
+}
+
+.features-section.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.features-section h2 {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  margin-bottom: 3rem;
+  color: #00796b;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition-delay: 0.2s;
+}
+
+.features-section.fade-in h2 {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.features-container {
+  display: flex;
+  flex-wrap: nowrap; /* keep horizontal */
+  gap: clamp(1rem, 2vw, 2rem);
+  overflow-x: auto;
+  padding-bottom: 1rem;
+
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  position: relative;
+
+  justify-content: center; /* center cards on desktop */
+}
+
+/* For mobile: allow scrolling from left */
+@media (max-width: 768px) {
+  .features-container {
+    justify-content: flex-start; /* left align for scroll */
+  }
+}
+
+/* Optional: hide scrollbars on WebKit browsers */
+.features-container::-webkit-scrollbar {
+  display: none;
+}
+
+.feature-card {
+  flex: 0 0 auto; /* prevent shrinking/growing */
+  width: clamp(200px, 20vw, 250px);
+  padding: clamp(1rem, 2.5vw, 2rem);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  scroll-snap-align: start; /* each card snaps to start */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.features-section.fade-in .feature-card:nth-child(1) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.5s;
+}
+
+.features-section.fade-in .feature-card:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.7s;
+}
+
+.features-section.fade-in .feature-card:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.9s;
+}
+
+.feature-card h3 {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  margin-bottom: 1rem;
+  color: #03e4c9ff;
+}
+
+.feature-card p {
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  color: #555;
+  line-height: 1.5;
+}
+
+/* ===== Visual cue for mobile scroll ===== */
+.features-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px; /* width of fading edge */
+  height: 100%;
+  pointer-events: none;
+  background: linear-gradient(to left, rgba(249, 249, 249, 1), rgba(249, 249, 249, 0)); /* fade effect */
+  display: none;
+}
+
+/* show fading edge only on small screens */
+@media (max-width: 768px) {
+  .features-section::after {
+    display: block;
+  }
+}
