@@ -1,7 +1,7 @@
 import React from "react";
-import { Schema, SchemaField } from "../../../hooks/SchemaPageHooks/useSchemas";
-import { useSchemaFields } from "../../../hooks/SchemaPageHooks/useManageFields";
-import { useSchemaName } from "../../../hooks/SchemaPageHooks/useSchemaName";
+import { Schema, SchemaField } from "../../../hooks/SchemaPage/useSchemas";
+import { useSchemaFields } from "../../../hooks/SchemaPage/useManageFields";
+import { useSchemaName } from "../../../hooks/SchemaPage/useSchemaName";
 import "../CreateModal.css";
 
 interface Props {

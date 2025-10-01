@@ -1,6 +1,6 @@
 // src/hooks/useFormPageData.ts
 import { useState, useEffect, useMemo } from "react";
-import { useSchemas } from "./SchemaPageHooks/useSchemas";
+import { useSchemas } from "./SchemaPage/useSchemas";
 
 export interface Row {
   [key: string]: string | number | boolean;
