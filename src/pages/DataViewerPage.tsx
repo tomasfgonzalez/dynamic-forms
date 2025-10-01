@@ -32,6 +32,9 @@ const DataViewerPage: React.FC = () => {
   const [colStart, setColStart] = useState(0);
   const colsPerPage = 10;
 
+  // Edit mode state
+  const [editMode, setEditMode] = useState(false);
+
   return (
     <div className="form-page-container">
       <h1 className={`form-page-title ${fadeIn ? "fade-in" : ""}`}>
@@ -85,13 +88,6 @@ const DataViewerPage: React.FC = () => {
             />
           </div>
 
-          {/* Edit / Add Row buttons */}
-          <div className="edit-buttons">
-            <button className="hero-button add-row" onClick={addRow}>
-              Add Row
-            </button>
-          </div>
-
           {/* Table navigation (for columns) */}
           {selectedSchema.fields.length > colsPerPage && (
             <TableNavigation
@@ -113,7 +109,7 @@ const DataViewerPage: React.FC = () => {
               insertRow={insertRow}
               deleteRow={deleteRow}
               addRow={addRow}
-              editMode={true} // You can toggle this dynamically if you implement edit/save later
+              editMode={editMode} // Table is editable only in edit mode
             />
           ) : (
             <div className="no-fields-message fade-in">
@@ -121,7 +117,38 @@ const DataViewerPage: React.FC = () => {
             </div>
           )}
 
-          {/* Pagination */}
+
+          {/* Edit buttons under the table (bottom-left) */}
+          <div className="edit-buttons">
+            {!editMode ? (
+              <button
+                className="hero-button edit"
+                onClick={() => setEditMode(true)}
+              >
+                Edit
+              </button>
+            ) : (
+              <>
+                <button
+                  className="hero-button save"
+                  onClick={() => setEditMode(false)}
+                >
+                  Save Changes
+                </button>
+                <button
+                  className="hero-button cancel"
+                  onClick={() => setEditMode(false)}
+                >
+                  Cancel Changes
+                </button>
+                <button className="hero-button add-row" onClick={addRow}>
+                  Add Row
+                </button>
+              </>
+            )}
+          </div>
+
+
           <div className="pagination-container">
             <Pagination
               currentPage={currentPage}
@@ -129,6 +156,7 @@ const DataViewerPage: React.FC = () => {
               goToPage={goToPage}
             />
           </div>
+
         </>
       )}
     </div>
