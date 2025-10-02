@@ -64,7 +64,9 @@ export default function DataTable({
       <table className="data-table">
         <thead>
           <tr>
-            {editMode && <th>Actions</th>}
+            {editMode && (
+              <th className="actions-col">Actions</th>
+            )}
             {visibleFields.map((f) => (
               <th key={f.name}>{f.name}</th>
             ))}
@@ -76,7 +78,7 @@ export default function DataTable({
             return (
               <tr key={realIndex}>
                 {editMode && (
-                  <td className="row-buttons-cell">
+                  <td className="row-buttons-cell actions-col">
                     <button onClick={() => insertRow(realIndex)}>Insert</button>
                     <button
                       onClick={() => {
