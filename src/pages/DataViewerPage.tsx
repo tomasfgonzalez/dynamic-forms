@@ -5,6 +5,7 @@ import { useDataViewerPageLogic } from "./../hooks/useDataViewerPageLogic";
 import DataTable from "../components/DataViewer/DataTable";
 import TableNavigation from "../components/DataViewer/TableNavigation";
 import Pagination from "../components/DataViewer/Pagination";
+import ExportCSVButton from "../components/DataViewer/ExportCSVButton";
 import "./DataViewerPage.css";
 
 const DataViewerPage: React.FC = () => {
@@ -111,12 +112,27 @@ const DataViewerPage: React.FC = () => {
 
           <div className="edit-buttons">
             {!editMode ? (
-              <button className="hero-button edit" onClick={handleEnterEdit}>Edit</button>
+              <>
+                <button className="hero-button edit" onClick={handleEnterEdit}>
+                  Edit
+                </button>
+                <ExportCSVButton
+                  data={filteredRows}
+                  fields={selectedSchema.fields}
+                  filename={`${selectedSchema.name.replace(/\s+/g, "_")}_data.csv`}
+                />
+              </>
             ) : (
               <>
-                <button className="hero-button save" onClick={handleSave}>Save Changes</button>
-                <button className="hero-button cancel" onClick={handleCancel}>Cancel Changes</button>
-                <button className="hero-button add-row" onClick={addRow}>Add Row</button>
+                <button className="hero-button save" onClick={handleSave}>
+                  Save Changes
+                </button>
+                <button className="hero-button cancel" onClick={handleCancel}>
+                  Cancel Changes
+                </button>
+                <button className="hero-button add-row" onClick={addRow}>
+                  Add Row
+                </button>
               </>
             )}
           </div>
@@ -135,3 +151,4 @@ const DataViewerPage: React.FC = () => {
 };
 
 export default DataViewerPage;
+
