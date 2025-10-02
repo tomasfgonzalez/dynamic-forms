@@ -18,42 +18,42 @@ export default function CreateFromScratch({ editingSchema, existingSchemas, onSa
   const fieldTypes: SchemaField["type"][] = ["text", "number", "checkbox", "date", "select"];
 
   const handleSave = () => {
-    if (!schemaName.trim()) {
-      alert("Schema must have a name");
-      return;
+    if (!schemaName.trim()) return alert("Schema must have a name");
+    if (fields.length === 0) return alert("Schema must have at least one field");
+    if (fields.some(f => f.name.trim() === "")) return alert("All fields must have a name");
+    if (fields.some(f => f.type === "select" && (!f.options || f.options.some(o => o.trim() === "")))) {
+      return alert("All select fields must have at least one non-empty option");
+    }
+    if (existingSchemas.some(s => s.name.toLowerCase() === schemaName.toLowerCase() && s.id !== (editingSchema?.id || ""))) {
+      return alert("A schema with this name already exists");
     }
 
-    if (fields.length === 0) {
-      alert("Schema must have at least one field");
-      return;
-    }
+    // Map fields to match example structure
+    const mappedFields: SchemaField[] = fields.map(f => {
+      const field: SchemaField = { name: f.name, type: f.type };
 
-    const emptyFields = fields.some(f => f.name.trim() === "");
-    if (emptyFields) {
-      alert("All fields must have a name before saving.");
-      return;
-    }
+      if (f.type === "number" || f.type === "date") {
+        const min = f.range?.min ?? "";
+        const max = f.range?.max ?? "";
 
-    const invalidSelect = fields.some(
-      (f) => f.type === "select" && (!f.options || f.options.some(opt => opt.trim() === ""))
-    );
-    if (invalidSelect) {
-      alert("All select fields must have at least one non-empty option.");
-      return;
-    }
+        // Only add range if min/max are defined and not both empty/zero
+        if (!((min === "" || min === 0) && (max === "" || max === 0))) {
+          field.range = { min, max };
+        }
+      }
 
-    const nameExists = existingSchemas.some(
-      (s) => s.name.toLowerCase() === schemaName.toLowerCase() && s.id !== (editingSchema?.id || "")
-    );
-    if (nameExists) {
-      alert("A schema with this name already exists. Choose another name.");
-      return;
-    }
+      if (f.type === "select") {
+        field.options = f.options ?? [""];
+      }
+
+      return field;
+    });
 
     onSave({
       id: editingSchema ? editingSchema.id : Date.now().toString(),
       name: schemaName,
-      fields,
+      fields: mappedFields,
+      data: editingSchema?.data || [],
     });
   };
 
@@ -61,7 +61,7 @@ export default function CreateFromScratch({ editingSchema, existingSchemas, onSa
     const fieldHasData = editingSchema?.data?.length && fields[index]?.name;
     if (fieldHasData) {
       const confirmDelete = window.confirm(
-        `This field has existing table data. Removing it will delete all its data. Continue?`
+        "This field has existing table data. Removing it will delete all its data. Continue?"
       );
       if (!confirmDelete) return;
     }
@@ -70,18 +70,19 @@ export default function CreateFromScratch({ editingSchema, existingSchemas, onSa
 
   const handleChangeFieldType = (index: number, newType: SchemaField["type"]) => {
     const fieldHasData = editingSchema?.data?.length && fields[index]?.name;
-    if (fieldHasData) {
-      const confirmChange = window.confirm(
-        `Changing the type of this field will affect existing table data. Continue?`
-      );
-      if (!confirmChange) return;
-    }
+    if (fieldHasData && !window.confirm("Changing this type will affect existing data. Continue?")) return;
 
     const field = fields[index];
     updateField(index, "type", newType);
 
     if (newType === "select") updateField(index, "options", field.options || [""]);
     else updateField(index, "options", undefined);
+
+    if (newType === "number" || newType === "date") {
+      updateField(index, "range", { min: "", max: "" });
+    } else {
+      updateField(index, "range", undefined);
+    }
   };
 
   return (
@@ -119,22 +120,22 @@ export default function CreateFromScratch({ editingSchema, existingSchemas, onSa
               ))}
             </select>
 
-            {field.type === "number" || field.type === "date" ? (
+            {(field.type === "number" || field.type === "date") && (
               <div className="field-range">
                 <input
                   type={field.type}
                   placeholder="Min"
-                  value={field.range?.min || ""}
+                  value={field.range?.min ?? ""}
                   onChange={(e) => updateField(index, "range", e.target.value, "min")}
                 />
                 <input
                   type={field.type}
                   placeholder="Max"
-                  value={field.range?.max || ""}
+                  value={field.range?.max ?? ""}
                   onChange={(e) => updateField(index, "range", e.target.value, "max")}
                 />
               </div>
-            ) : null}
+            )}
 
             {field.type === "select" && (
               <div className="select-options">
@@ -152,8 +153,7 @@ export default function CreateFromScratch({ editingSchema, existingSchemas, onSa
                     <button
                       type="button"
                       onClick={() => {
-                        const confirmDelete = window.confirm("Are you sure you want to remove this option?");
-                        if (confirmDelete) {
+                        if (window.confirm("Remove this option?")) {
                           const newOptions = field.options!.filter((_, i) => i !== optIndex);
                           updateField(index, "options", newOptions);
                         }

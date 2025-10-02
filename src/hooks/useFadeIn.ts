@@ -7,6 +7,7 @@ export function useFadeIn(): boolean {
   const location = useLocation();
 
   useEffect(() => {
+    
     setFadeIn(false); // reset before fade-in
     const timeout = setTimeout(() => setFadeIn(true), 10);
     return () => clearTimeout(timeout);
