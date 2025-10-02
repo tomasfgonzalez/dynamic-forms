@@ -1,7 +1,7 @@
 // src/pages/DataViewerPage.tsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useDataViewerPageLogic } from "./../hooks/useDataViewerPageLogic";
+import { useDataViewerPageLogic } from "../hooks/DataViewer/useDataViewerPageLogic";
 import DataTable from "../components/DataViewer/DataTable";
 import TableNavigation from "../components/DataViewer/TableNavigation";
 import Pagination from "../components/DataViewer/Pagination";

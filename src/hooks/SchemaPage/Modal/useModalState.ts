@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Schema } from "./useSchemas";
+import type { Schema } from "../useSchemas";
 
 export function useSchemaModal() {
   const [isModalOpen, setIsModalOpen] = useState(false);

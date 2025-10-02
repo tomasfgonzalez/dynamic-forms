@@ -3,7 +3,7 @@ import React from "react";
 import CreateFromScratch from "./Modal/EditTab";
 import ImportSchema from "./Modal/ImportTab";
 import ExampleSchemas from "./Modal/ExamplesTab";
-import { useSchemaModalStep } from "../../hooks/SchemaPage/useModalStep";
+import { useSchemaModalStep } from "../../hooks/SchemaPage/Modal/useModalStep";
 import type { Schema } from "../../hooks/SchemaPage/useSchemas";
 import "./CreateModal.css";
 
