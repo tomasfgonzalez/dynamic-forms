@@ -1,4 +1,3 @@
-// src/pages/FormsPage.tsx
 import React, { useEffect, useState } from "react";
 import useFormPageData from "../hooks/DataViewer/useFormPageData";
 import { useFadeIn } from "../hooks/useFadeIn";
@@ -36,21 +35,12 @@ export default function FormsPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedSchema) return;
+    if (!validateAll()) return;
 
-    if (!validateAll()) return; // Stop if validation fails
-
-    // Add row and update cells
     addRow();
     const newRowIndex = selectedSchema.data?.length || 0;
     Object.entries(formValues).forEach(([key, value]) => {
-      // Convert numbers properly
-      const field = selectedSchema.fields.find((f) => f.name === key);
-      if (field?.type === "number") {
-        const num = Number(value);
-        updateCell(newRowIndex, key, isNaN(num) ? 0 : num);
-      } else {
-        updateCell(newRowIndex, key, value);
-      }
+      updateCell(newRowIndex, key, value);
     });
 
     alert("Form submitted!");
@@ -66,7 +56,6 @@ export default function FormsPage() {
         {selectedSchema.fields.map((f) => (
           <div key={f.name} className="form-field">
             <label>{f.name}</label>
-
             {f.type === "checkbox" ? (
               <input
                 type="checkbox"
@@ -93,14 +82,13 @@ export default function FormsPage() {
                 style={{ borderColor: validationErrors[f.name] ? "red" : "#ccc" }}
               />
             )}
-
             {validationErrors[f.name] && (
               <div className="validation-msg">{validationErrors[f.name]}</div>
             )}
           </div>
         ))}
 
-        <button type="submit" disabled={isSubmitDisabled}>
+        <button type="submit" disabled={isSubmitDisabled} className={isSubmitDisabled ? "disabled" : ""}>
           Submit
         </button>
       </form>
