@@ -1,6 +1,6 @@
 import React from "react";
-import type { Schema } from "../../../hooks/SchemaPage/useSchemas";
-import "../CreateModal.css";
+import type { Schema } from "../../../types/schema";
+  import "../CreateModal.css";
 
 const exampleSchemas: Schema[] = [
   {

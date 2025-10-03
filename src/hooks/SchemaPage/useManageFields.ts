@@ -1,14 +1,6 @@
 // src/hooks/useSchemaFields.ts
 import { useState, useEffect } from "react";
-import type { Schema, SchemaField } from "./useSchemas";
-
-export type FieldType = "text" | "number" | "checkbox" | "date" | "select";
-
-export interface FieldWithRange extends SchemaField {
-  type: FieldType;
-  options?: string[];
-  range?: { min: string | number; max: string | number };
-}
+import type { Schema, FieldWithRange, FieldType } from "../../types/schema";
 
 export function useSchemaFields(editingSchema: Schema | null) {
   const [fields, setFields] = useState<FieldWithRange[]>([]);

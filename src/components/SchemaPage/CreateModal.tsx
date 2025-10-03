@@ -4,7 +4,7 @@ import CreateFromScratch from "./Modal/EditTab";
 import ImportSchema from "./Modal/ImportTab";
 import ExampleSchemas from "./Modal/ExamplesTab";
 import { useSchemaModalStep } from "../../hooks/SchemaPage/Modal/useModalStep";
-import type { Schema } from "../../hooks/SchemaPage/useSchemas";
+import type { Schema } from "./../../types/schema";
 import "./CreateModal.css";
 
 interface CreateSchemaModalProps {

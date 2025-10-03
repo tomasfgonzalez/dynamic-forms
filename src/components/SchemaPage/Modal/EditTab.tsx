@@ -1,5 +1,5 @@
 import React from "react";
-import { Schema, SchemaField } from "../../../hooks/SchemaPage/useSchemas";
+import type { Schema, SchemaField } from "../../../types/schema";
 import { useSchemaFields } from "../../../hooks/SchemaPage/useManageFields";
 import { useSchemaName } from "../../../hooks/SchemaPage/useSchemaName";
 import "../CreateModal.css";

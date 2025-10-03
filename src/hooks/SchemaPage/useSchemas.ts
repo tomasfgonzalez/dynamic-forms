@@ -1,18 +1,6 @@
+// src/hooks/SchemaPage/useSchemas.ts
 import { useState, useEffect } from "react";
-
-export interface SchemaField {
-  name: string;
-  type: "text" | "number" | "checkbox" | "date" | "select";
-  options?: string[];
-  range?: { min: string | number; max: string | number };
-}
-
-export interface Schema {
-  id: string;
-  name: string;
-  fields: SchemaField[];
-  data?: any[];
-}
+import { Schema } from "../../types/schema";  // <-- import type
 
 export function useSchemas() {
   const [schemas, setSchemas] = useState<Schema[]>(() => {

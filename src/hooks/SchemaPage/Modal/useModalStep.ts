@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import type { Schema } from "../useSchemas";
+import type { Schema } from "../../../types/schema";
 
 export function useSchemaModalStep(isOpen: boolean, editingSchema: Schema | null) {
   const [step, setStep] = useState<"landing" | "scratch" | "import" | "examples">("landing");

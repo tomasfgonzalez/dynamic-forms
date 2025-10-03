@@ -1,12 +1,20 @@
-// src/components/schemasPageComponents/SchemasGrid.tsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
+
+// Modals & cards
 import CreateSchemaModal from "./CreateModal";
-import { useSchemas, Schema } from "../../hooks/SchemaPage/useSchemas";
-import { useSchemaModal } from "../../hooks/SchemaPage/Modal/useModalState";
-import { useFadeIn } from "../../hooks/useFadeIn";
 import SchemaCard from "./Cards/SchemaCard";
 import CreateSchemaCard from "./Cards/CreateSchemaCard";
+
+// Hooks
+import { useSchemas } from "../../hooks/SchemaPage/useSchemas";
+import { useSchemaModal } from "../../hooks/SchemaPage/Modal/useModalState";
+import { useFadeIn } from "../../hooks/useFadeIn";
+
+// Types
+import type { Schema } from "../../types/schema";
+
+// Styles
 import "./Grid.css";
 
 export default function SchemasGrid() {
@@ -16,10 +24,12 @@ export default function SchemasGrid() {
   const fadeIn = useFadeIn();
   const navigate = useNavigate();
 
+  // Navigate to form page
   const handleUse = (schema: Schema) => {
-    navigate(`/form/${encodeURIComponent(schema.name)}`);
+    navigate(`/form/${encodeURIComponent(String(schema.name))}`);
   };
 
+  // Save schema from modal
   const handleSave = (schemaData: { id?: string | number; name: string; fields: any[] }) => {
     const newSchema: Schema = {
       id: schemaData.id ? String(schemaData.id) : Date.now().toString(),
@@ -33,7 +43,7 @@ export default function SchemasGrid() {
       data: editingSchema?.data || [],
     };
 
-    if (editingSchema) updateSchema(editingSchema.id, newSchema);
+    if (editingSchema) updateSchema(String(editingSchema.id), newSchema);
     else addSchema(newSchema);
 
     closeModal();
@@ -52,7 +62,7 @@ export default function SchemasGrid() {
             delay={(index + 1) * 150}
             onUse={() => handleUse(schema)}
             onEdit={() => openForEdit(schema)}
-            onDelete={() => deleteSchema(schema.id)}
+            onDelete={() => deleteSchema(String(schema.id))}
           />
         ))}
       </div>

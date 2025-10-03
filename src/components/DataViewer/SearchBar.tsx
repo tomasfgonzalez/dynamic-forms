@@ -1,6 +1,6 @@
 // src/components/DataViewerComponents/SearchBar.tsx
 import React from "react";
-import type { FieldWithRange } from "../../hooks/SchemaPage/useManageFields";
+import type { Schema, SchemaField, FieldWithRange } from "./../../types/schema";
 import "./SearchBar.css";
 
 interface SearchBarProps {
