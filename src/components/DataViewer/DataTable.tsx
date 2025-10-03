@@ -1,6 +1,6 @@
 // src/components/DataViewerComponents/DataTable.tsx
 import React from "react";
-import type { SchemaField } from "../../hooks/DataViewer/useFormPageData";
+import type { SchemaField } from "../../types/schema";
 import "./DataTable.css";
 
 interface DataTableProps {

@@ -1,14 +1,15 @@
+// src/pages/FormsPage.tsx
 import React, { useEffect, useState } from "react";
-import useFormPageData from "../hooks/DataViewer/useFormPageData";
+import { useDataViewerPage } from "../hooks/DataViewer/useDataViewerPage";
 import { useFadeIn } from "../hooks/useFadeIn";
 import { useFormValidation } from "../hooks/FormPage/useFormValidation";
 import { useSelectedSchema } from "../hooks/FormPage/useSelectedSchema";
 import "./FormsPage.css";
 
 export default function FormsPage() {
-  const { addRow, updateCell } = useFormPageData();
   const fadeIn = useFadeIn();
   const { selectedSchema, loading } = useSelectedSchema();
+  const { addRow, updateCell, rows } = useDataViewerPage();
 
   const [initialValues, setInitialValues] = useState<{ [key: string]: any }>({});
 
@@ -38,7 +39,7 @@ export default function FormsPage() {
     if (!validateAll()) return;
 
     addRow();
-    const newRowIndex = selectedSchema.data?.length || 0;
+    const newRowIndex = rows.length - 1; // last added row
     Object.entries(formValues).forEach(([key, value]) => {
       updateCell(newRowIndex, key, value);
     });
@@ -88,7 +89,11 @@ export default function FormsPage() {
           </div>
         ))}
 
-        <button type="submit" disabled={isSubmitDisabled} className={isSubmitDisabled ? "disabled" : ""}>
+        <button
+          type="submit"
+          disabled={isSubmitDisabled}
+          className={isSubmitDisabled ? "disabled" : ""}
+        >
           Submit
         </button>
       </form>

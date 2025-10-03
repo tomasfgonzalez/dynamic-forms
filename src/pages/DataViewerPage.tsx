@@ -1,7 +1,8 @@
 // src/pages/DataViewerPage.tsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useDataViewerPageLogic } from "../hooks/DataViewer/useDataViewerPageLogic";
+import { useDataViewerPage } from "../hooks/DataViewer/useDataViewerPage";
+import { useFadeIn } from "../hooks/useFadeIn";
 import DataTable from "../components/DataViewer/DataTable";
 import TableNavigation from "../components/DataViewer/TableNavigation";
 import Pagination from "../components/DataViewer/Pagination";
@@ -10,8 +11,9 @@ import "./DataViewerPage.css";
 
 const DataViewerPage: React.FC = () => {
   const navigate = useNavigate();
+  const fadeIn = useFadeIn(); // <-- hook added
+
   const {
-    fadeIn,
     schemas,
     selectedSchema,
     selectedSchemaId,
@@ -34,7 +36,7 @@ const DataViewerPage: React.FC = () => {
     handleEnterEdit,
     handleSave,
     handleCancel,
-  } = useDataViewerPageLogic();
+  } = useDataViewerPage();
 
   return (
     <div className="form-page-container">
@@ -43,7 +45,7 @@ const DataViewerPage: React.FC = () => {
       </h1>
 
       {schemas.length === 0 && (
-        <div className="no-schemas-message fade-in">
+        <div className={`no-schemas-message ${fadeIn ? "fade-in" : ""}`}>
           <p>Select a schema to view and manage your data. If none exists, create one first!</p>
           <button className="hero-button" onClick={() => navigate("/schemas")}>
             Go to Schemas
@@ -105,7 +107,7 @@ const DataViewerPage: React.FC = () => {
               colsPerPage={colsPerPage}
             />
           ) : (
-            <div className="no-fields-message fade-in">
+            <div className={`no-fields-message ${fadeIn ? "fade-in" : ""}`}>
               This schema has no fields yet.
             </div>
           )}
@@ -151,4 +153,3 @@ const DataViewerPage: React.FC = () => {
 };
 
 export default DataViewerPage;
-

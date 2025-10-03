@@ -1,28 +1,13 @@
-// src/hooks/useFormPageData.ts
+// src/hooks/useDataViewerPage.ts
 import { useState, useEffect, useMemo } from "react";
 import { useSchemas } from "../SchemaPage/useSchemas";
+import type { Schema, Row } from "../../types/schema";
 
-export interface Row {
-  [key: string]: string | number | boolean;
-}
-
-export interface SchemaField {
-  name: string;
-  type: "text" | "number" | "checkbox" | "date" | "select";
-  options?: string[];
-  range?: { min: string | number; max: string | number };
-}
-
-export interface Schema {
-  id: string | number;
-  name: string;
-  fields: SchemaField[];
-  data?: Row[];
-}
-
-export default function useFormPageData() {
+// --- Hook ---
+export const useDataViewerPage = () => {
   const { schemas, saveSchemaData } = useSchemas();
-  const [fadeIn, setFadeIn] = useState(false);
+
+  // --- Schema selection + rows ---
   const [selectedSchemaId, setSelectedSchemaId] = useState<string | number | null>(null);
   const [rows, setRows] = useState<Row[]>([]);
   const [search, setSearch] = useState("");
@@ -31,13 +16,7 @@ export default function useFormPageData() {
 
   const selectedSchema = schemas.find((s) => s.id === selectedSchemaId) || null;
 
-  // Fade-in effect for UI
-  useEffect(() => {
-    const timer = setTimeout(() => setFadeIn(true), 50);
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Auto-select last opened schema
+  // --- Load last schema ---
   useEffect(() => {
     if (!selectedSchemaId && schemas.length > 0) {
       const lastOpenedId = localStorage.getItem("lastSchemaId");
@@ -47,12 +26,11 @@ export default function useFormPageData() {
     }
   }, [schemas, selectedSchemaId]);
 
-  // Store last opened schema
   useEffect(() => {
     if (selectedSchemaId) localStorage.setItem("lastSchemaId", selectedSchemaId.toString());
   }, [selectedSchemaId]);
 
-  // Load rows when schema changes
+  // --- Load rows when schema changes ---
   useEffect(() => {
     if (!selectedSchema) {
       setRows([]);
@@ -66,7 +44,7 @@ export default function useFormPageData() {
     setCurrentPage(1);
   }, [selectedSchemaId, selectedSchema]);
 
-  // Persist rows
+  // --- Persist rows ---
   const persist = (schemaId: string | number, data: Row[]) => {
     if (!schemaId) return;
     if (typeof saveSchemaData === "function") {
@@ -80,13 +58,12 @@ export default function useFormPageData() {
     }
   };
 
-  // Set rows completely (for cancel/restore)
   const replaceRows = (newRows: Row[]) => {
     setRows(newRows);
     if (selectedSchemaId) persist(selectedSchemaId, newRows);
   };
 
-  // Create an empty row
+  // --- Row operations ---
   const createEmptyRow = (): Row => {
     const row: Row = {};
     selectedSchema?.fields.forEach((f) => {
@@ -97,7 +74,6 @@ export default function useFormPageData() {
     return row;
   };
 
-  // Add row at end
   const addRow = () => {
     if (!selectedSchema) return;
     setRows((prevRows) => {
@@ -111,7 +87,6 @@ export default function useFormPageData() {
     });
   };
 
-  // Insert row at index
   const insertRow = (index: number) => {
     if (!selectedSchema) return;
     setRows((prevRows) => {
@@ -121,7 +96,6 @@ export default function useFormPageData() {
     });
   };
 
-  // Delete row at index
   const deleteRow = (index: number) => {
     if (!selectedSchema) return;
     setRows((prevRows) => {
@@ -132,7 +106,6 @@ export default function useFormPageData() {
     });
   };
 
-  // Update a cell
   const updateCell = (rowIndex: number, fieldName: string, value: string | number | boolean) => {
     if (!selectedSchema) return;
     setRows((prevRows) => {
@@ -152,7 +125,7 @@ export default function useFormPageData() {
     });
   };
 
-  // Search filter
+  // --- Search ---
   const matchesSearch = (row: Row, schema: Schema, q: string) => {
     if (!q) return true;
     const lower = q.toLowerCase();
@@ -180,8 +153,29 @@ export default function useFormPageData() {
     setCurrentPage(page);
   };
 
+  // --- Column navigation ---
+  const [colStart, setColStart] = useState(0);
+  const colsPerPage = 10;
+
+  // --- Edit mode ---
+  const [editMode, setEditMode] = useState(false);
+  const [backupRows, setBackupRows] = useState<Row[]>([]);
+
+  const handleEnterEdit = () => {
+    setBackupRows(JSON.parse(JSON.stringify(filteredRows)));
+    setEditMode(true);
+  };
+  const handleSave = () => {
+    setBackupRows([]);
+    setEditMode(false);
+  };
+  const handleCancel = () => {
+    setRows(backupRows);
+    setBackupRows([]);
+    setEditMode(false);
+  };
+
   return {
-    fadeIn,
     schemas,
     selectedSchema,
     selectedSchemaId,
@@ -198,6 +192,13 @@ export default function useFormPageData() {
     deleteRow,
     updateCell,
     goToPage,
-    setRows: replaceRows, // <-- expose setRows for DataViewerPage
+    setRows: replaceRows,
+    colStart,
+    setColStart,
+    colsPerPage,
+    editMode,
+    handleEnterEdit,
+    handleSave,
+    handleCancel,
   };
-}
+};

@@ -1,10 +1,12 @@
+// src/hooks/FormPage/useSelectedSchema.ts
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import useFormPageData, { Schema } from "../DataViewer/useFormPageData";
+import { Schema } from "../../types/schema";
+import { useDataViewerPage } from "../DataViewer/useDataViewerPage";
 
 export function useSelectedSchema() {
-  const { schemaName } = useParams();
-  const { schemas, selectedSchema, setSelectedSchemaId } = useFormPageData();
+  const { schemaName } = useParams<{ schemaName: string }>();
+  const { schemas, selectedSchema, setSelectedSchemaId } = useDataViewerPage();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
