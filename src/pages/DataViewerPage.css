@@ -49,15 +49,15 @@
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, transform 0.15s ease;
   margin: 0.25rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .hero-button.save {
   background-color: #03a9f4;
   color: #fff;
 }
-
 .hero-button.save:hover {
   background-color: #0288d1;
 }
@@ -66,7 +66,6 @@
   background-color: #f44336;
   color: #fff;
 }
-
 .hero-button.cancel:hover {
   background-color: #d32f2f;
 }
@@ -75,7 +74,6 @@
   background-color: #03e4c9ff;
   color: #fff;
 }
-
 .hero-button.add-row:hover {
   background-color: #02bfa0;
 }
@@ -84,7 +82,6 @@
   background-color: #03e4c9ff;
   color: #fff;
 }
-
 .hero-button.edit:hover {
   background-color: #02bfa0;
 }
@@ -96,7 +93,7 @@
   gap: 1rem;
   margin-bottom: 1rem;
   flex-wrap: wrap;
-  justify-content: flex-start; /* top-left */
+  justify-content: flex-start;
 }
 
 .schema-selector label {
@@ -131,7 +128,7 @@
 /* Search bar styling */
 .search-bar {
   display: flex;
-  justify-content: flex-start; /* under schema, aligned left */
+  justify-content: flex-start;
   margin-bottom: 1.5rem;
 }
 
@@ -144,17 +141,52 @@
   font-size: 1rem;
 }
 
-/* Table navigation arrows container */
-.table-nav-container {
+/* Table navigation (centered) */
+.table-nav {
   display: flex;
-  justify-content: center; /* centered above table */
-  margin-bottom: 0.75rem;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.table-nav button {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  border: none;
+  background-color: #03e4c9ff;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.table-nav button:hover:not(:disabled) {
+  background-color: #02cbb1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.table-nav button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.table-nav span {
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  color: #333;
 }
 
 /* Edit buttons container (bottom-left) */
 .edit-buttons {
   display: flex;
-  justify-content: flex-start; /* bottom-left */
+  justify-content: flex-start;
   gap: 0.5rem;
   flex-wrap: wrap;
   margin-top: 1rem;
@@ -185,4 +217,3 @@
   align-items: center;
   margin-top: 1rem;
 }
-

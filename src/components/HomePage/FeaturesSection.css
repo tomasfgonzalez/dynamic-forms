@@ -1,7 +1,6 @@
 .features-section {
   padding: clamp(2rem, 5vw, 4rem) 2rem; /* vertical padding scales */
   text-align: center;
-  background-color: #f9f9f9;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 1s ease, transform 1s ease;

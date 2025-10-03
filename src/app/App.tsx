@@ -10,17 +10,20 @@ import FormsPage from "../pages/FormsPage";
 
 // Components
 import Navbar from "../components/Navbar";
+import "./App.css"; 
 
 const App: React.FC = () => {
   return (
     <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/schemas" element={<SchemasPage />} />
-        <Route path="/data-viewer" element={<DataViewerPage />} />
-        <Route path="/form/:schemaName" element={<FormsPage />} />
-      </Routes>
+      <div className="app-background">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/schemas" element={<SchemasPage />} />
+          <Route path="/data-viewer" element={<DataViewerPage />} />
+          <Route path="/form/:schemaName" element={<FormsPage />} />
+        </Routes>
+      </div>
     </Router>
   );
 };
