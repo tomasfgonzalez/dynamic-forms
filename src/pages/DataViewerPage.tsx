@@ -1,4 +1,3 @@
-// src/pages/DataViewerPage.tsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDataViewerPage } from "../hooks/DataViewer/useDataViewerPage";
@@ -11,7 +10,7 @@ import "./DataViewerPage.css";
 
 const DataViewerPage: React.FC = () => {
   const navigate = useNavigate();
-  const fadeIn = useFadeIn(); // <-- hook added
+  const fadeIn = useFadeIn();
 
   const {
     schemas,
@@ -46,7 +45,10 @@ const DataViewerPage: React.FC = () => {
 
       {schemas.length === 0 && (
         <div className={`no-schemas-message ${fadeIn ? "fade-in" : ""}`}>
-          <p>Select a schema to view and manage your data. If none exists, create one first!</p>
+          <p>
+            Select a schema to view and manage your data. If none exists, create
+            one first!
+          </p>
           <button className="hero-button" onClick={() => navigate("/schemas")}>
             Go to Schemas
           </button>
@@ -118,11 +120,15 @@ const DataViewerPage: React.FC = () => {
                 <button className="hero-button edit" onClick={handleEnterEdit}>
                   Edit
                 </button>
-                <ExportCSVButton
-                  data={filteredRows}
-                  fields={selectedSchema.fields}
-                  filename={`${selectedSchema.name.replace(/\s+/g, "_")}_data.csv`}
-                />
+                <div className="export-button-container">
+                  <ExportCSVButton
+                    data={filteredRows}
+                    fields={selectedSchema.fields}
+                    filename={`${selectedSchema.name
+                      .replace(/\s+/g, "_")
+                      .toLowerCase()}_data.csv`}
+                  />
+                </div>
               </>
             ) : (
               <>
@@ -139,13 +145,15 @@ const DataViewerPage: React.FC = () => {
             )}
           </div>
 
-          <div className="pagination-container">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              goToPage={goToPage}
-            />
-          </div>
+          {totalPages > 1 && (
+            <div className="pagination-container">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                goToPage={goToPage}
+              />
+            </div>
+          )}
         </>
       )}
     </div>

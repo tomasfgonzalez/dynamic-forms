@@ -2,7 +2,6 @@
 import { useState } from "react";
 
 import { useSchemas } from "../SchemaPage/useSchemas";
-import type { Schema, Row } from "../../types/schema";
 import { useSchemaSelection } from "./useSchemaSelection";
 import { useRows } from "./useRows";
 import { usePagination } from "./usePagination";
@@ -26,7 +25,7 @@ export const useDataViewerPage = () => {
   // column navigation
   const [colStart, setColStart] = useState(0);
   const colsPerPage = 10;
-  const rowsPerPage = 20;
+  const rowsPerPage = 10;
 
   return {
     schemas,

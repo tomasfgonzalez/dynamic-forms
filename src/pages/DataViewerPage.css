@@ -209,11 +209,34 @@
   margin: 1rem 0;
 }
 
-/* Pagination container */
 .pagination-container {
+  position: fixed;       /* anchor to bottom */
+  bottom: 0;
+  left: 0;
+  width: 100%;
   display: flex;
   justify-content: center;
   gap: 0.5rem;
   align-items: center;
-  margin-top: 1rem;
+  margin: 0;
+  padding: 0.5rem 0;
+  background-color: #fff; /* optional */
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+  z-index: 100;
+}
+
+
+
+/* Align export CSV button to the right and color it blue */
+.export-button-container {
+  margin-left: auto; /* pushes it to the right */
+}
+
+.export-button-container button {
+  background-color: #2196f3; /* blue */
+  color: #fff;
+}
+
+.export-button-container button:hover {
+  background-color: #1976d2; /* darker blue on hover */
 }
