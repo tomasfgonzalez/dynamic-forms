@@ -7,7 +7,7 @@ import DataTable from "../components/DataViewer/DataTable";
 import TableNavigation from "../components/DataViewer/TableNavigation";
 import Pagination from "../components/DataViewer/Pagination";
 import ExportCSVButton from "../components/DataViewer/ExportCSVButton";
-import Button from "../components/Button"; // <-- updated
+import Button from "../components/Button";
 import "./DataViewerPage.css";
 
 const DataViewerPage: React.FC = () => {
@@ -41,19 +41,24 @@ const DataViewerPage: React.FC = () => {
 
   return (
     <div className="form-page-container">
-      <h1 className={`form-page-title ${fadeIn ? "fade-in" : ""}`}>
-        Form Viewer
-      </h1>
+      {/* Show Form Viewer title only if there are schemas */}
+      {schemas.length === 0 && (
+        <h1 className={`form-page-title ${fadeIn ? "fade-in" : ""}`}>
+          Form Viewer 
+        </h1>
+      )}
 
+      {/* Show message if no schemas exist */}
       {schemas.length === 0 && (
         <div className={`no-schemas-message ${fadeIn ? "fade-in" : ""}`}>
-          <p>Select a schema to view and manage your data. If none exists, create one first!</p>
+          <p>You don’t have any schemas yet. Click the button to create one and start managing your data!</p>
           <Button variant="hero" onClick={() => navigate("/schemas")}>
             Go to Schemas
           </Button>
         </div>
       )}
 
+      {/* Main Form Viewer content */}
       {schemas.length > 0 && selectedSchema && (
         <>
           <div className="schema-selector">
@@ -119,11 +124,13 @@ const DataViewerPage: React.FC = () => {
                 <Button variant="normal" onClick={handleEnterEdit}>
                   Edit
                 </Button>
-                <ExportCSVButton
-                  data={filteredRows}
-                  fields={selectedSchema.fields}
-                  filename={`${selectedSchema.name.replace(/\s+/g, "_")}_data.csv`}
-                />
+                <div>
+                  <ExportCSVButton
+                    data={filteredRows}
+                    fields={selectedSchema.fields}
+                    filename={`${selectedSchema.name.replace(/\s+/g, "_")}_data.csv`}
+                  />
+                </div>
               </>
             ) : (
               <>
@@ -133,7 +140,7 @@ const DataViewerPage: React.FC = () => {
                 <Button variant="gray" onClick={handleCancel}>
                   Cancel Changes
                 </Button>
-                <Button variant="primary" onClick={addRow}>
+                <Button variant="normal" onClick={addRow}>
                   Add Row
                 </Button>
               </>

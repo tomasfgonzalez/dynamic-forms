@@ -87,7 +87,7 @@
 }
 
 .schema-field {
-  font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+  font-size: clamp(0.7rem, 1vw, 1rem);
   color: #333;
   line-height: 1.2;
   text-align: left;      /* left-aligned text */
@@ -121,7 +121,7 @@
 /* Create schema card (+ icon centered) */
 .create-schema-card {
   order: -1; /* always first */
-  font-size: clamp(2rem, 5vw, 2.5rem); /* responsive plus icon */
+  font-size: clamp(2rem, 1vw, 2.5rem); /* responsive plus icon */
   border: 2px dashed #00796b;
   border-radius: 12px;
   background-color: #f9f9f9;
@@ -129,7 +129,7 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.2s ease;
 }
 
 .create-schema-card:hover {
