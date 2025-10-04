@@ -15,6 +15,7 @@ interface DataTableProps {
   editMode: boolean;
   colStart: number;
   colsPerPage: number;
+  showErrors: boolean; // added
 }
 
 export default function DataTable({
@@ -28,6 +29,7 @@ export default function DataTable({
   editMode,
   colStart,
   colsPerPage,
+  showErrors,
 }: DataTableProps) {
   const visibleFields = schema.fields.slice(colStart, colStart + colsPerPage);
   const paginatedRows = rows.slice(
@@ -35,13 +37,17 @@ export default function DataTable({
     currentPage * rowsPerPage
   );
 
+  // Validate individual cell
   const getValidationMessage = (value: any, field: SchemaField): string => {
+    if (field.type === "checkbox") return "";
+
+    if (value === "" || value === null || value === undefined) return "Required";
+
     if (!field.range) return "";
+
     const { min, max } = field.range;
-    if ((min === undefined || min === "") && (max === undefined || max === "")) return "";
 
     if (field.type === "number") {
-      if (value === "") return "";
       const num = Number(value);
       if (isNaN(num)) return "Must be a number";
       if (min !== undefined && min !== "" && num < Number(min)) return `Min: ${min}`;
@@ -50,13 +56,23 @@ export default function DataTable({
     }
 
     if (field.type === "date") {
-      if (!value) return "";
-      if (min && value < min) return `Min date: ${min}`;
-      if (max && value > max) return `Max date: ${max}`;
+      const dateValue = new Date(value);
+      if (min && dateValue < new Date(min)) return `Min date: ${min}`;
+      if (max && dateValue > new Date(max)) return `Max date: ${max}`;
       return "";
     }
 
     return "";
+  };
+
+  // Validate all fields in a row
+  const validateRow = (row: Record<string, any>) => {
+    const errors: Record<string, string> = {};
+    visibleFields.forEach((f) => {
+      const msg = getValidationMessage(row[f.name], f);
+      if (msg) errors[f.name] = msg;
+    });
+    return errors;
   };
 
   return (
@@ -64,9 +80,7 @@ export default function DataTable({
       <table className="data-table">
         <thead>
           <tr>
-            {editMode && (
-              <th className="actions-col">Actions</th>
-            )}
+            {editMode && <th className="actions-col">Actions</th>}
             {visibleFields.map((f) => (
               <th key={f.name}>{f.name}</th>
             ))}
@@ -75,15 +89,16 @@ export default function DataTable({
         <tbody>
           {paginatedRows.map((row, rowIndex) => {
             const realIndex = (currentPage - 1) * rowsPerPage + rowIndex;
+            const rowErrors = validateRow(row);
+
             return (
-              <tr key={realIndex}>
+              <tr key={realIndex} className={Object.keys(rowErrors).length > 0 ? "invalid-row" : ""}>
                 {editMode && (
                   <td className="row-buttons-cell actions-col">
                     <button onClick={() => insertRow(realIndex)}>Insert</button>
                     <button
                       onClick={() => {
-                        if (window.confirm("Delete this row?"))
-                          deleteRow(realIndex);
+                        if (window.confirm("Delete this row?")) deleteRow(realIndex);
                       }}
                     >
                       Delete
@@ -92,6 +107,7 @@ export default function DataTable({
                 )}
                 {visibleFields.map((f) => {
                   const value = row[f.name];
+                  const errorMsg = rowErrors[f.name];
 
                   if (f.type === "checkbox") {
                     return (
@@ -100,9 +116,7 @@ export default function DataTable({
                           type="checkbox"
                           checked={!!value}
                           disabled={!editMode}
-                          onChange={(e) =>
-                            updateCell(realIndex, f.name, e.target.checked)
-                          }
+                          onChange={(e) => updateCell(realIndex, f.name, e.target.checked)}
                         />
                       </td>
                     );
@@ -112,18 +126,18 @@ export default function DataTable({
                     return (
                       <td key={f.name}>
                         <select
-                          value={value}
+                          value={typeof value === "boolean" ? String(value) : value ?? ""}
                           disabled={!editMode}
-                          onChange={(e) =>
-                            updateCell(realIndex, f.name, e.target.value)
-                          }
+                          onChange={(e) => updateCell(realIndex, f.name, e.target.value)}
                         >
+                          <option value="">Select...</option>
                           {(f.options || []).map((opt, i) => (
                             <option key={i} value={opt}>
                               {opt}
                             </option>
                           ))}
                         </select>
+                        {showErrors && errorMsg && <div className="validation-msg">{errorMsg}</div>}
                       </td>
                     );
                   }
@@ -131,24 +145,13 @@ export default function DataTable({
                   return (
                     <td key={f.name}>
                       <input
-                        className="cell-input"
+                        className={`cell-input ${showErrors && errorMsg ? "invalid" : ""}`}
                         type={f.type === "number" ? "number" : f.type}
-                        value={value}
+                        value={typeof value === "boolean" ? String(value) : value ?? ""}
                         disabled={!editMode}
-                        onChange={(e) =>
-                          updateCell(realIndex, f.name, e.target.value)
-                        }
-                        style={{
-                          border: getValidationMessage(value, f)
-                            ? "1px solid red"
-                            : "1px solid #ccc",
-                        }}
+                        onChange={(e) => updateCell(realIndex, f.name, e.target.value)}
                       />
-                      {getValidationMessage(value, f) && (
-                        <div className="validation-msg">
-                          {getValidationMessage(value, f)}
-                        </div>
-                      )}
+                      {showErrors && errorMsg && <div className="validation-msg">{errorMsg}</div>}
                     </td>
                   );
                 })}
