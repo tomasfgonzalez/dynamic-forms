@@ -1,22 +1,23 @@
 // src/pages/FormsPage.tsx
 import React, { useEffect, useState } from "react";
-import { useDataViewerPage } from "../hooks/DataViewer/useDataViewerPage";
 import { useFadeIn } from "../hooks/useFadeIn";
 import { useFormValidation } from "../hooks/FormPage/useFormValidation";
 import { useSelectedSchema } from "../hooks/FormPage/useSelectedSchema";
+import { useSubmitData } from "../hooks/FormPage/useSubmitData";
+import type { Row } from "../types/schema";
 import "./FormsPage.css";
 
 export default function FormsPage() {
   const fadeIn = useFadeIn();
   const { selectedSchema, loading } = useSelectedSchema();
-  const { addRow, updateCell, rows } = useDataViewerPage();
+  const { submitData } = useSubmitData();
 
-  const [initialValues, setInitialValues] = useState<{ [key: string]: any }>({});
+  const [initialValues, setInitialValues] = useState<Record<string, any>>({});
 
-  // Initialize empty values when schema changes
+  // Initialize empty form values when schema changes
   useEffect(() => {
     if (!selectedSchema) return;
-    const values: { [key: string]: any } = {};
+    const values: Record<string, any> = {};
     selectedSchema.fields.forEach((f) => {
       if (f.type === "checkbox") values[f.name] = false;
       else if (f.type === "select") values[f.name] = f.options?.[0] || "";
@@ -30,21 +31,33 @@ export default function FormsPage() {
     validationErrors,
     handleChange,
     validateAll,
+    setFormValues,
     isSubmitDisabled,
   } = useFormValidation(selectedSchema?.fields || [], initialValues);
+
+  // Reset formValues whenever initialValues change
+  useEffect(() => {
+    setFormValues(initialValues);
+  }, [initialValues, setFormValues]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedSchema) return;
     if (!validateAll()) return;
 
-    addRow();
-    const newRowIndex = rows.length - 1; // last added row
-    Object.entries(formValues).forEach(([key, value]) => {
-      updateCell(newRowIndex, key, value);
-    });
+    // Save the row into the schema's data array
+    submitData(formValues as Row, selectedSchema);
 
     alert("Form submitted!");
+
+    // Clear the form fields
+    const clearedValues: Record<string, any> = {};
+    selectedSchema.fields.forEach((f) => {
+      if (f.type === "checkbox") clearedValues[f.name] = false;
+      else if (f.type === "select") clearedValues[f.name] = f.options?.[0] || "";
+      else clearedValues[f.name] = "";
+    });
+    setFormValues(clearedValues);
   };
 
   if (loading) return <p>Loading schema...</p>;
@@ -57,6 +70,7 @@ export default function FormsPage() {
         {selectedSchema.fields.map((f) => (
           <div key={f.name} className="form-field">
             <label>{f.name}</label>
+
             {f.type === "checkbox" ? (
               <input
                 type="checkbox"
@@ -83,6 +97,7 @@ export default function FormsPage() {
                 style={{ borderColor: validationErrors[f.name] ? "red" : "#ccc" }}
               />
             )}
+
             {validationErrors[f.name] && (
               <div className="validation-msg">{validationErrors[f.name]}</div>
             )}
