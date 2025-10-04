@@ -7,6 +7,7 @@ import DataTable from "../components/DataViewer/DataTable";
 import TableNavigation from "../components/DataViewer/TableNavigation";
 import Pagination from "../components/DataViewer/Pagination";
 import ExportCSVButton from "../components/DataViewer/ExportCSVButton";
+import Button from "../components/Button"; // <-- updated
 import "./DataViewerPage.css";
 
 const DataViewerPage: React.FC = () => {
@@ -19,7 +20,6 @@ const DataViewerPage: React.FC = () => {
     selectedSchemaId,
     setSelectedSchemaId,
     filteredRows,
-    paginatedRows,
     search,
     setSearch,
     currentPage,
@@ -47,13 +47,10 @@ const DataViewerPage: React.FC = () => {
 
       {schemas.length === 0 && (
         <div className={`no-schemas-message ${fadeIn ? "fade-in" : ""}`}>
-          <p>
-            Select a schema to view and manage your data. If none exists, create
-            one first!
-          </p>
-          <button className="btn hero" onClick={() => navigate("/schemas")}>
+          <p>Select a schema to view and manage your data. If none exists, create one first!</p>
+          <Button variant="hero" onClick={() => navigate("/schemas")}>
             Go to Schemas
-          </button>
+          </Button>
         </div>
       )}
 
@@ -99,7 +96,7 @@ const DataViewerPage: React.FC = () => {
           {selectedSchema.fields.length > 0 ? (
             <DataTable
               schema={selectedSchema}
-              rows={paginatedRows} // <--- use paginated rows for proper paging
+              rows={filteredRows}
               currentPage={currentPage}
               rowsPerPage={rowsPerPage}
               updateCell={updateCell}
@@ -119,43 +116,37 @@ const DataViewerPage: React.FC = () => {
           <div className="edit-buttons">
             {!editMode ? (
               <>
-                <button className="btn normal" onClick={handleEnterEdit}>
+                <Button variant="normal" onClick={handleEnterEdit}>
                   Edit
-                </button>
-                <div className="export-button-container">
-                  <ExportCSVButton
-                    data={filteredRows}
-                    fields={selectedSchema.fields}
-                    filename={`${selectedSchema.name
-                      .replace(/\s+/g, "_")
-                      .toLowerCase()}_data.csv`}
-                  />
-                </div>
+                </Button>
+                <ExportCSVButton
+                  data={filteredRows}
+                  fields={selectedSchema.fields}
+                  filename={`${selectedSchema.name.replace(/\s+/g, "_")}_data.csv`}
+                />
               </>
             ) : (
               <>
-                <button className="btn normal" onClick={handleSave}>
+                <Button variant="normal" onClick={handleSave}>
                   Save Changes
-                </button>
-                <button className="btn gray" onClick={handleCancel}>
+                </Button>
+                <Button variant="gray" onClick={handleCancel}>
                   Cancel Changes
-                </button>
-                <button className="btn normal" onClick={addRow}>
+                </Button>
+                <Button variant="primary" onClick={addRow}>
                   Add Row
-                </button>
+                </Button>
               </>
             )}
           </div>
 
-          {totalPages > 1 && (
-            <div className="pagination-container">
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                goToPage={goToPage}
-              />
-            </div>
-          )}
+          <div className="pagination-container">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              goToPage={goToPage}
+            />
+          </div>
         </>
       )}
     </div>
