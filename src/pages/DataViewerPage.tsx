@@ -7,7 +7,7 @@ import DataTable from "../components/DataViewer/DataTable";
 import TableNavigation from "../components/DataViewer/TableNavigation";
 import Pagination from "../components/DataViewer/Pagination";
 import ExportCSVButton from "../components/DataViewer/ExportCSVButton";
-import Button from "../components/Button"; // <-- updated
+import Button from "../components/Button";
 import "./DataViewerPage.css";
 
 const DataViewerPage: React.FC = () => {
@@ -41,17 +41,18 @@ const DataViewerPage: React.FC = () => {
 
   return (
     <div className="form-page-container">
-      <h1 className={`form-page-title ${fadeIn ? "fade-in" : ""}`}>
-        Form Viewer
-      </h1>
-
       {schemas.length === 0 && (
-        <div className={`no-schemas-message ${fadeIn ? "fade-in" : ""}`}>
-          <p>Select a schema to view and manage your data. If none exists, create one first!</p>
-          <Button variant="hero" onClick={() => navigate("/schemas")}>
-            Go to Schemas
-          </Button>
-        </div>
+        <>
+          <h1 className={`form-page-title ${fadeIn ? "fade-in" : ""}`}>
+            Form Viewer
+          </h1>
+          <div className={`no-schemas-message ${fadeIn ? "fade-in" : ""}`}>
+            <p>Select a schema to view and manage your data. If none exists, create one first!</p>
+            <Button variant="hero" onClick={() => navigate("/schemas")}>
+              Go to Schemas
+            </Button>
+          </div>
+        </>
       )}
 
       {schemas.length > 0 && selectedSchema && (
@@ -133,7 +134,7 @@ const DataViewerPage: React.FC = () => {
                 <Button variant="gray" onClick={handleCancel}>
                   Cancel Changes
                 </Button>
-                <Button variant="primary" onClick={addRow}>
+                <Button variant="normal" onClick={addRow}>
                   Add Row
                 </Button>
               </>

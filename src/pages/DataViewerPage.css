@@ -2,6 +2,7 @@
 
 .form-page-container {
   padding: clamp(2rem, 5vw, 3rem);
+  padding-top: calc(clamp(2rem, 5vw, 3rem) + 70px); /* extra space for navbar */
   font-family: Arial, sans-serif;
   width: 100%;
   margin: 0;
@@ -175,4 +176,3 @@
 .export-button-container button:hover {
   background-color: #1976d2; /* darker blue on hover */
 }
-
