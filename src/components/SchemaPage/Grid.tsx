@@ -19,22 +19,28 @@ import "./Grid.css";
 
 export default function SchemasGrid() {
   const { schemas, addSchema, updateSchema, deleteSchema } = useSchemas();
-  const { isModalOpen, editingSchema, openForCreate, openForEdit, closeModal } =
-    useSchemaModal();
+  const { isModalOpen, editingSchema, openForCreate, openForEdit, closeModal } = useSchemaModal();
   const fadeIn = useFadeIn();
   const navigate = useNavigate();
 
-  // Navigate to form page
   const handleUse = (schema: Schema) => {
     navigate(`/form/${encodeURIComponent(String(schema.name))}`);
   };
 
-  // Save schema from modal
+  const getNextId = (): number => {
+    const existingIds = schemas.map(s => Number(s.id));
+    let nextId = 1;
+    while (existingIds.includes(nextId)) nextId++;
+    return nextId;
+  };
+
   const handleSave = (schemaData: { id?: string | number; name: string; fields: any[] }) => {
+    const newId = editingSchema ? Number(editingSchema.id) : getNextId();
+
     const newSchema: Schema = {
-      id: schemaData.id ? String(schemaData.id) : Date.now().toString(),
+      id: String(newId),
       name: schemaData.name,
-      fields: schemaData.fields.map((f) => ({
+      fields: schemaData.fields.map(f => ({
         name: f.name,
         type: f.type,
         options: f.options,

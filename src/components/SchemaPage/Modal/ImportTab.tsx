@@ -11,12 +11,19 @@ interface ImportSchemaProps {
 export default function ImportSchema({ onImport, onCancel, existingSchemas = [] }: ImportSchemaProps) {
   const [importedJSON, setImportedJSON] = useState("");
 
-  const generateUniqueId = () => {
-    let newId: string;
-    do {
-      newId = (Date.now() + Math.floor(Math.random() * 1000)).toString();
-    } while (existingSchemas.some((s) => s.id === newId));
-    return newId;
+  // Find next free numeric ID based on existingSchemas + localStorage
+  const getNextId = (): string => {
+    // Get schemas from localStorage
+    const stored = localStorage.getItem("schemas");
+    const storedSchemas: Schema[] = stored ? JSON.parse(stored) : [];
+
+    // Merge with existingSchemas to avoid conflicts
+    const allSchemas = [...existingSchemas, ...storedSchemas];
+    const existingIds = allSchemas.map(s => Number(s.id)).filter(n => !isNaN(n));
+
+    let nextId = 1;
+    while (existingIds.includes(nextId)) nextId++;
+    return String(nextId);
   };
 
   const handleImportJSON = () => {
@@ -28,10 +35,7 @@ export default function ImportSchema({ onImport, onCancel, existingSchemas = [] 
         return;
       }
 
-      parsed.id =
-        parsed.id && !existingSchemas.some((s) => s.id === parsed.id)
-          ? parsed.id
-          : generateUniqueId();
+      parsed.id = parsed.id && !existingSchemas.some((s) => s.id === parsed.id) ? parsed.id : getNextId();
 
       onImport(parsed);
     } catch (e: any) {
