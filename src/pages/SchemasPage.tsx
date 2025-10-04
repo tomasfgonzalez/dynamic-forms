@@ -14,7 +14,7 @@ const SchemasPage: React.FC = () => {
   return (
     <div className="schemas-page">
       <h1 className={`schemas-title ${fadeIn ? "fade-in" : ""}`}>
-        Create, Select or Import a Schema
+        Select, Create or Edit a Schema
       </h1>
 
       <p className={`schemas-description ${fadeIn ? "fade-in" : ""}`}>

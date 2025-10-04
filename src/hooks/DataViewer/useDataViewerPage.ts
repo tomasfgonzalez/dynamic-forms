@@ -16,6 +16,7 @@ export const useDataViewerPage = () => {
   const { rows, setRows, addRow, insertRow, deleteRow, updateCell } = useRows({ selectedSchema, saveSchemaData });
 
   // edit mode
+<<<<<<< HEAD
   const { editMode, handleEnterEdit, handleSave, handleCancel } = useEditMode(rows, setRows);
 
   // static rows per page
@@ -31,6 +32,13 @@ export const useDataViewerPage = () => {
     totalPages,
     goToPage,
   } = usePagination(rows, selectedSchema, rowsPerPage);
+=======
+  const { editMode, handleEnterEdit, handleSave, handleCancel, showErrors } = useEditMode(
+  filteredRows,
+  setRows,
+  selectedSchema
+);
+>>>>>>> c6a24f48036f9063615e11ce740aabe2c1b679ab
 
   // column navigation
   const [colStart, setColStart] = useState(0);
@@ -62,5 +70,6 @@ export const useDataViewerPage = () => {
     handleEnterEdit,
     handleSave,
     handleCancel,
+    showErrors, // <-- add here
   };
 };

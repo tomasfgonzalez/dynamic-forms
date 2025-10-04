@@ -22,7 +22,7 @@ export default function SchemaCard({ schema, fadeIn, delay, onUse, onEdit, onDel
       <div className="schema-fields-wrapper">
         <div className="schema-fields">
           {schema.fields.length === 0 ? <p>No fields</p> : null}
-          {schema.fields.slice(0, 10).map((f, i) => (
+          {schema.fields.slice(0, 8).map((f, i) => (
             <div key={`${schema.id}-field-${i}`} className="schema-field" style={{ opacity: Math.max(1 - i * 0.09, 0) }}>
               {f.name} ({f.type})
             </div>

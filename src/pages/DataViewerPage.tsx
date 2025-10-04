@@ -37,10 +37,12 @@ const DataViewerPage: React.FC = () => {
     handleEnterEdit,
     handleSave,
     handleCancel,
+    showErrors, // <-- make sure to pass this
   } = useDataViewerPage();
 
   return (
     <div className="form-page-container">
+<<<<<<< HEAD
       {schemas.length === 0 && (
         <>
           <h1 className={`form-page-title ${fadeIn ? "fade-in" : ""}`}>
@@ -53,6 +55,17 @@ const DataViewerPage: React.FC = () => {
             </Button>
           </div>
         </>
+=======
+      {schemas.length === 0 && (
+        <h1 className={`form-page-title ${fadeIn ? "fade-in" : ""}`}>Form Viewer</h1>
+      )}
+
+      {schemas.length === 0 && (
+        <div className={`no-schemas-message ${fadeIn ? "fade-in" : ""}`}>
+          <p>You don’t have any schemas yet. Click the button to create one and start managing your data!</p>
+          <Button variant="hero" onClick={() => navigate("/schemas")}>Go to Schemas</Button>
+        </div>
+>>>>>>> c6a24f48036f9063615e11ce740aabe2c1b679ab
       )}
 
       {schemas.length > 0 && selectedSchema && (
@@ -69,9 +82,7 @@ const DataViewerPage: React.FC = () => {
               }}
             >
               {schemas.map((s) => (
-                <option key={s.id} value={s.id}>
-                  {s.name}
-                </option>
+                <option key={s.id} value={s.id}>{s.name}</option>
               ))}
             </select>
           </div>
@@ -107,6 +118,7 @@ const DataViewerPage: React.FC = () => {
               editMode={editMode}
               colStart={colStart}
               colsPerPage={colsPerPage}
+              showErrors={showErrors} // <-- fix
             />
           ) : (
             <div className={`no-fields-message ${fadeIn ? "fade-in" : ""}`}>
@@ -117,17 +129,18 @@ const DataViewerPage: React.FC = () => {
           <div className="edit-buttons">
             {!editMode ? (
               <>
-                <Button variant="normal" onClick={handleEnterEdit}>
-                  Edit
-                </Button>
-                <ExportCSVButton
-                  data={filteredRows}
-                  fields={selectedSchema.fields}
-                  filename={`${selectedSchema.name.replace(/\s+/g, "_")}_data.csv`}
-                />
+                <Button variant="normal" onClick={handleEnterEdit}>Edit</Button>
+                <div>
+                  <ExportCSVButton
+                    data={filteredRows}
+                    fields={selectedSchema.fields}
+                    filename={`${selectedSchema.name.replace(/\s+/g, "_")}_data.csv`}
+                  />
+                </div>
               </>
             ) : (
               <>
+<<<<<<< HEAD
                 <Button variant="normal" onClick={handleSave}>
                   Save Changes
                 </Button>
@@ -137,6 +150,11 @@ const DataViewerPage: React.FC = () => {
                 <Button variant="normal" onClick={addRow}>
                   Add Row
                 </Button>
+=======
+                <Button variant="normal" onClick={handleSave}>Save Changes</Button>
+                <Button variant="gray" onClick={handleCancel}>Cancel Changes</Button>
+                <Button variant="normal" onClick={addRow}>Add Row</Button>
+>>>>>>> c6a24f48036f9063615e11ce740aabe2c1b679ab
               </>
             )}
           </div>
