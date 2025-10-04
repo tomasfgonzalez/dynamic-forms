@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 
 import { useSchemas } from "../SchemaPage/useSchemas";
@@ -21,7 +20,11 @@ export const useDataViewerPage = () => {
   const { search, setSearch, filteredRows, currentPage, totalPages, goToPage } = usePagination(rows, selectedSchema);
 
   // edit mode
-  const { editMode, handleEnterEdit, handleSave, handleCancel } = useEditMode(filteredRows, setRows);
+  const { editMode, handleEnterEdit, handleSave, handleCancel, showErrors } = useEditMode(
+  filteredRows,
+  setRows,
+  selectedSchema
+);
 
   // column navigation
   const [colStart, setColStart] = useState(0);
@@ -53,5 +56,6 @@ export const useDataViewerPage = () => {
     handleEnterEdit,
     handleSave,
     handleCancel,
+    showErrors, // <-- add here
   };
 };

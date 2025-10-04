@@ -1,12 +1,15 @@
-// src/components/Navbar.tsx
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
+import logo from "../assets/logo.png"; // make sure path is correct
 
 const Navbar: React.FC = () => {
   return (
-    <nav>
-      <div className="brand">DynamicForms</div>
+    <nav className="navbar">
+      <div className="brand">
+        <img src={logo} alt="Logo" className="logo" />
+        <span>DynamicForms</span>
+      </div>
       <ul>
         <li><Link to="/">Home</Link></li>
         <li><Link to="/schemas">Schemas</Link></li>

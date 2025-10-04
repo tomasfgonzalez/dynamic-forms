@@ -10,7 +10,7 @@
   cursor: pointer;
   border: none;
   transition: all 0.3s ease;
-  padding: 0.6rem 1.2rem;
+  padding: 0.6rem 1rem;
   font-size: 0.95rem;
 }
 
@@ -46,11 +46,11 @@
    Hero Button (Prominent)
 ================================ */
 .btn.hero {
-  padding: clamp(1rem, 3vw, 1.5rem) clamp(2rem, 3vw, 3rem);
+  padding: clamp(1rem, 1vw, 1.3rem) clamp(2rem, 2vw, 3rem);
   background-color: #03e4c9ff;
-  color: #fff;
-  font-size: clamp(0.8rem, 1.5vw, 1rem);
-  border-radius: 8px;
+  color: #ffffff;
+  font-size: clamp(0.8rem, 1.9vw, 1.1rem);
+  border-radius: 20px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
 }
 .btn.hero:hover {
@@ -63,22 +63,25 @@
    Remove Button (Danger)
 ================================ */
 .btn.remove {
-  background-color: #d32f2f; /* red background */
+  background-color: #d32f2f;
   color: #fff;
   font-size: 0.95rem;
-  padding: 0.6rem 1.2rem; /* same as normal */
-  border-radius: 5px; /* same as normal */
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
   border: none;
   cursor: pointer;
   transition: background 0.2s ease, transform 0.15s ease;
 }
 .btn.remove:hover {
-  background-color: #b71c1c; /* darker red on hover */
+  background-color: #b71c1c;
   transform: translateY(-1px);
 }
 
+/* ================================
+   Blue Button
+================================ */
 .btn.blue {
-  background-color: #2196f3; /* blue */
+  background-color: #2196f3;
   color: #fff;
   font-size: 0.95rem;
   padding: 0.6rem 1.2rem;
@@ -88,8 +91,37 @@
   font-weight: 500;
   transition: background 0.2s ease, transform 0.15s ease;
 }
-
 .btn.blue:hover {
-  background-color: #1976d2; /* darker blue on hover */
+  background-color: #1976d2;
   transform: translateY(-1px);
+}
+
+/* ================================
+   Mobile adjustments for buttons
+================================ */
+@media (max-width: 480px) {
+  .btn {
+    padding: 0.4rem 0.7rem !important;
+    font-size: 0.8rem !important;
+    border-radius: 4px !important;
+  }
+
+  .btn.hero {
+    padding: 0.6rem 1.2rem !important;
+    font-size: 0.85rem !important;
+    border-radius: 10px !important;
+  }
+
+  .btn.gray {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.8rem !important;
+    border-radius: 4px !important;
+  }
+
+  .btn.remove,
+  .btn.blue {
+    padding: 0.4rem 0.8rem !important;
+    font-size: 0.8rem !important;
+    border-radius: 4px !important;
+  }
 }

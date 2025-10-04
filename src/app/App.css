@@ -1,3 +1,12 @@
+/* src/App.css */
+
+/* Global font for the entire app */
+body {
+  font-family: sans-serif; /* replace 'sans-serif' with your font-family if needed */
+  margin: 0;
+  padding: 0;
+}
+
 .app-background {
   position: relative;
   min-height: 100vh;

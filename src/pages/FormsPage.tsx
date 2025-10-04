@@ -1,3 +1,4 @@
+// src/pages/FormsPage.tsx
 import React, { useEffect, useState } from "react";
 import { useFadeIn } from "../hooks/useFadeIn";
 import { useFormValidation } from "../hooks/FormPage/useFormValidation";
@@ -72,6 +73,7 @@ export default function FormsPage() {
             {f.type === "checkbox" ? (
               <input
                 type="checkbox"
+                className="big-checkbox"
                 checked={formValues[f.name]}
                 onChange={(e) => handleChange(f.name, e.target.checked)}
               />
