@@ -16,7 +16,7 @@
   font-weight: 700;
   color: #00796b;
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(10px);
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
@@ -30,8 +30,7 @@
   text-align: center;
   font-size: clamp(1.1rem, 2.5vw, 1.4rem);
   color: #555;
-  line-height: 1.5;
-  margin-top: 3rem;
+  transform: translateY(0px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -40,50 +39,6 @@
 
 .no-schemas-message p {
   margin-bottom: 2rem;
-}
-
-/* Buttons using the new format */
-.hero-button {
-  padding: 0.5rem 0.8rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: background 0.2s ease, transform 0.15s ease;
-  margin: 0.25rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.hero-button.save {
-  background-color: #03a9f4;
-  color: #fff;
-}
-.hero-button.save:hover {
-  background-color: #0288d1;
-}
-
-.hero-button.cancel {
-  background-color: #f44336;
-  color: #fff;
-}
-.hero-button.cancel:hover {
-  background-color: #d32f2f;
-}
-
-.hero-button.add-row {
-  background-color: #03e4c9ff;
-  color: #fff;
-}
-.hero-button.add-row:hover {
-  background-color: #02bfa0;
-}
-
-.hero-button.edit {
-  background-color: #03e4c9ff;
-  color: #fff;
-}
-.hero-button.edit:hover {
-  background-color: #02bfa0;
 }
 
 /* Schema selector */
@@ -151,24 +106,6 @@
   width: 100%;
 }
 
-.table-nav button {
-  padding: 0.35rem 0.75rem;
-  font-size: 0.95rem;
-  border-radius: 6px;
-  border: none;
-  background-color: #03e4c9ff;
-  color: #fff;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.table-nav button:hover:not(:disabled) {
-  background-color: #02cbb1;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
 .table-nav button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
@@ -224,8 +161,6 @@
   box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
   z-index: 100;
 }
-
-
 
 /* Align export CSV button to the right and color it blue */
 .export-button-container {

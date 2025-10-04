@@ -1,3 +1,4 @@
+// src/pages/DataViewerPage.tsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDataViewerPage } from "../hooks/DataViewer/useDataViewerPage";
@@ -18,6 +19,7 @@ const DataViewerPage: React.FC = () => {
     selectedSchemaId,
     setSelectedSchemaId,
     filteredRows,
+    paginatedRows,
     search,
     setSearch,
     currentPage,
@@ -49,7 +51,7 @@ const DataViewerPage: React.FC = () => {
             Select a schema to view and manage your data. If none exists, create
             one first!
           </p>
-          <button className="hero-button" onClick={() => navigate("/schemas")}>
+          <button className="btn hero" onClick={() => navigate("/schemas")}>
             Go to Schemas
           </button>
         </div>
@@ -97,7 +99,7 @@ const DataViewerPage: React.FC = () => {
           {selectedSchema.fields.length > 0 ? (
             <DataTable
               schema={selectedSchema}
-              rows={filteredRows}
+              rows={paginatedRows} // <--- use paginated rows for proper paging
               currentPage={currentPage}
               rowsPerPage={rowsPerPage}
               updateCell={updateCell}
@@ -117,7 +119,7 @@ const DataViewerPage: React.FC = () => {
           <div className="edit-buttons">
             {!editMode ? (
               <>
-                <button className="hero-button edit" onClick={handleEnterEdit}>
+                <button className="btn normal" onClick={handleEnterEdit}>
                   Edit
                 </button>
                 <div className="export-button-container">
@@ -132,13 +134,13 @@ const DataViewerPage: React.FC = () => {
               </>
             ) : (
               <>
-                <button className="hero-button save" onClick={handleSave}>
+                <button className="btn normal" onClick={handleSave}>
                   Save Changes
                 </button>
-                <button className="hero-button cancel" onClick={handleCancel}>
+                <button className="btn gray" onClick={handleCancel}>
                   Cancel Changes
                 </button>
-                <button className="hero-button add-row" onClick={addRow}>
+                <button className="btn normal" onClick={addRow}>
                   Add Row
                 </button>
               </>

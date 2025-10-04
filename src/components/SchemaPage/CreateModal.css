@@ -4,11 +4,8 @@
 :root {
   --primary: #03e4c9;
   --primary-hover: #02c3a3;
-  --danger: #ff6b6b;
-  --danger-hover: #ff4b4b;
   --neutral: #c0c0c0;
   --neutral-hover: #646464;
-  --text-dark: #111;
   --text-light: #555;
   --border-color: #ccc;
   --bg-light: #f5f5f5;
@@ -165,35 +162,6 @@
   border-radius: 4px;
 }
 
-.field-row button {
-  padding: 6px 12px;
-  background-color: var(--danger);
-  border: none;
-  border-radius: 4px;
-  color: white;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.field-row button:hover {
-  background-color: var(--danger-hover);
-}
-
-.add-field-button {
-  margin-top: 1rem;
-  padding: 0.6rem 1.2rem;
-  background-color: var(--primary);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.add-field-button:hover {
-  background-color: var(--primary-hover);
-}
-
 /* ================================
    Example Schemas
 ================================ */
@@ -203,24 +171,8 @@
   gap: 0.8rem;
 }
 
-.example-button {
-  padding: 0.6rem 1rem;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  background-color: var(--primary);
-  color: #fff;
-  font-weight: 500;
-  font-size: 1rem;
-  transition: background 0.2s ease;
-}
-
-.example-button:hover {
-  background-color: var(--primary-hover);
-}
-
 /* ================================
-   Modal Actions (Unified)
+   Modal Actions Container
 ================================ */
 .modal-actions {
   margin-top: 1.5rem;
@@ -228,31 +180,6 @@
   gap: 1rem;
   justify-content: flex-end;
   flex-wrap: wrap;
-}
-
-.modal-actions button {
-  padding: 0.6rem 1.2rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 1rem;
-  transition: background 0.2s ease, transform 0.15s ease;
-  background-color: var(--primary);
-  color: #fff;
-}
-
-.modal-actions button:hover {
-  background-color: var(--primary-hover);
-  transform: translateY(-1px);
-}
-
-.modal-actions button:last-child {
-  background-color: var(--neutral);
-}
-
-.modal-actions button:last-child:hover {
-  background-color: var(--neutral-hover);
 }
 
 /* ================================
@@ -272,6 +199,6 @@
 
 .delete-cross:hover,
 .delete-cross:focus-visible {
-  color: var(--text-dark);
+  color: var(--primary);
   outline: none;
 }

@@ -1,4 +1,3 @@
-// src/components/formPageComponents/Pagination.tsx
 import React from "react";
 import "./Pagination.css";
 
@@ -9,13 +8,26 @@ interface PaginationProps {
 }
 
 export default function Pagination({ currentPage, totalPages, goToPage }: PaginationProps) {
+  const canPrev = currentPage > 1;
+  const canNext = currentPage < totalPages;
+
   return (
     <div className="pagination-container">
-      <button onClick={() => goToPage(currentPage - 1)} disabled={currentPage === 1}>
+      <button
+        className="btn normal"
+        onClick={() => goToPage(currentPage - 1)}
+        disabled={!canPrev}
+      >
         Prev
       </button>
-      <span>Page {currentPage} of {totalPages}</span>
-      <button onClick={() => goToPage(currentPage + 1)} disabled={currentPage === totalPages}>
+      <span>
+        Page {currentPage} of {totalPages}
+      </span>
+      <button
+        className="btn normal"
+        onClick={() => goToPage(currentPage + 1)}
+        disabled={!canNext}
+      >
         Next
       </button>
     </div>

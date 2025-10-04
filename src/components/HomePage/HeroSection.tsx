@@ -1,11 +1,10 @@
-// src/components/HeroSection.tsx
 import React from "react";
-import { Link } from "react-router-dom";
 import { useFadeIn } from "../../hooks/useFadeIn";
+import Button from "./../Button";
 import "./HeroSection.css";
 
 const HeroSection: React.FC = () => {
-  const loaded = useFadeIn(); // defaults to fade on mount only
+  const loaded = useFadeIn();
 
   return (
     <section className={`hero-section ${loaded ? "fade-in" : ""}`}>
@@ -14,9 +13,9 @@ const HeroSection: React.FC = () => {
         Effortlessly create custom forms, add new entries, validate input automatically,{" "}
         and keep your data organized — all in one easy-to-use platform.
       </p>
-      <Link to="/schemas" className="hero-button">
+      <Button to="/schemas" variant="hero">
         Get Started
-      </Link>
+      </Button>
     </section>
   );
 };

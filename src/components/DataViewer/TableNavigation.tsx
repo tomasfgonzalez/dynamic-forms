@@ -23,14 +23,22 @@ const TableNavigation: React.FC<TableNavigationProps> = ({
 
   return (
     <div className="table-nav">
-      <button disabled={!canPrev} onClick={handlePrev}>
+      <button
+        className="btn normal"
+        disabled={!canPrev}
+        onClick={handlePrev}
+      >
         ◀
       </button>
       <span>
         Columns {colStart + 1}–{Math.min(colStart + colsPerPage, totalCols)} of{" "}
         {totalCols}
       </span>
-      <button disabled={!canNext} onClick={handleNext}>
+      <button
+        className="btn normal"
+        disabled={!canNext}
+        onClick={handleNext}
+      >
         ▶
       </button>
     </div>

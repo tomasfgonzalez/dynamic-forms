@@ -1,10 +1,10 @@
-// src/components/schemasPageComponents/CreateSchemaModal.tsx
 import React from "react";
 import CreateFromScratch from "./Modal/EditTab";
 import ImportSchema from "./Modal/ImportTab";
 import ExampleSchemas from "./Modal/ExamplesTab";
 import { useSchemaModalStep } from "../../hooks/SchemaPage/Modal/useModalStep";
-import type { Schema } from "./../../types/schema";
+import type { Schema } from "../../types/schema";
+import Button from "./../Button"; // updated import for reusable button
 import "./CreateModal.css";
 
 interface CreateSchemaModalProps {
@@ -71,7 +71,9 @@ const CreateSchemaModal: React.FC<CreateSchemaModalProps> = ({
               </div>
             </div>
             <div className="modal-actions">
-              <button onClick={onClose}>Cancel</button>
+              <Button variant="gray" onClick={onClose}>
+                Cancel
+              </Button>
             </div>
           </>
         )}

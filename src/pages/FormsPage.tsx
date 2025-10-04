@@ -1,4 +1,3 @@
-// src/pages/FormsPage.tsx
 import React, { useEffect, useState } from "react";
 import { useFadeIn } from "../hooks/useFadeIn";
 import { useFormValidation } from "../hooks/FormPage/useFormValidation";
@@ -45,12 +44,11 @@ export default function FormsPage() {
     if (!selectedSchema) return;
     if (!validateAll()) return;
 
-    // Save the row into the schema's data array
     submitData(formValues as Row, selectedSchema);
 
     alert("Form submitted!");
 
-    // Clear the form fields
+    // Clear form
     const clearedValues: Record<string, any> = {};
     selectedSchema.fields.forEach((f) => {
       if (f.type === "checkbox") clearedValues[f.name] = false;
@@ -107,7 +105,7 @@ export default function FormsPage() {
         <button
           type="submit"
           disabled={isSubmitDisabled}
-          className={isSubmitDisabled ? "disabled" : ""}
+          className={`btn blue ${isSubmitDisabled ? "disabled" : ""}`}
         >
           Submit
         </button>

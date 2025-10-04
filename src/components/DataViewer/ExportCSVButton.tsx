@@ -1,11 +1,11 @@
 import React from "react";
 
 interface ExportCSVButtonProps {
-  data: any[];              // array of rows
+  data: any[];                // array of rows
   fields: { name: string }[]; // schema fields
-  filename?: string;        // optional filename
-  buttonText?: string;      // optional button text
-  className?: string;       // optional styling
+  filename?: string;          // optional filename
+  buttonText?: string;        // optional button text
+  className?: string;         // optional styling
 }
 
 const ExportCSVButton: React.FC<ExportCSVButtonProps> = ({
@@ -13,7 +13,7 @@ const ExportCSVButton: React.FC<ExportCSVButtonProps> = ({
   fields,
   filename,
   buttonText = "Export to CSV",
-  className = "hero-button export",
+  className = "btn blue", // use the blue variant
 }) => {
   const handleExport = () => {
     if (!fields || data.length === 0) return;
@@ -34,14 +34,8 @@ const ExportCSVButton: React.FC<ExportCSVButtonProps> = ({
     const csvContent = "data:text/csv;charset=utf-8," + csvRows.join("\n");
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
-    link.setAttribute(
-      "href",
-      encodedUri
-    );
-    link.setAttribute(
-      "download",
-      filename ?? `data_export.csv`
-    );
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", filename ?? `data_export.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

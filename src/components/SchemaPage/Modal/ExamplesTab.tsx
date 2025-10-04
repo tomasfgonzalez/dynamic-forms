@@ -1,6 +1,7 @@
 import React from "react";
 import type { Schema } from "../../../types/schema";
-  import "../CreateModal.css";
+import "../CreateModal.css";
+import Button from "../../Button";
 
 const exampleSchemas: Schema[] = [
   {
@@ -55,14 +56,17 @@ export default function ExampleSchemas({ onSelect, onCancel }: Props) {
       <h2>Try Our Examples</h2>
       <div className="examples-list">
         {exampleSchemas.map((ex) => (
-          <button key={ex.id} className="example-button" onClick={() => onSelect(ex)}>
+          <Button key={ex.id} variant="normal" onClick={() => onSelect(ex)}>
             {ex.name}
-          </button>
+          </Button>
         ))}
       </div>
       <div className="modal-actions">
-        <button onClick={onCancel}>Back</button>
+        <Button variant="gray" onClick={onCancel}>
+          Back
+        </Button>
       </div>
     </>
   );
 }
+

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import "../CreateModal.css";
+import "./../CreateModal.css";
 import type { Schema } from "../../../types/schema";
+import Button from "../../Button"; // reusable button
 
 interface ImportSchemaProps {
   onImport: (schema: Schema) => void;
@@ -13,11 +14,8 @@ export default function ImportSchema({ onImport, onCancel, existingSchemas = [] 
 
   // Find next free numeric ID based on existingSchemas + localStorage
   const getNextId = (): string => {
-    // Get schemas from localStorage
     const stored = localStorage.getItem("schemas");
     const storedSchemas: Schema[] = stored ? JSON.parse(stored) : [];
-
-    // Merge with existingSchemas to avoid conflicts
     const allSchemas = [...existingSchemas, ...storedSchemas];
     const existingIds = allSchemas.map(s => Number(s.id)).filter(n => !isNaN(n));
 
@@ -35,7 +33,9 @@ export default function ImportSchema({ onImport, onCancel, existingSchemas = [] 
         return;
       }
 
-      parsed.id = parsed.id && !existingSchemas.some((s) => s.id === parsed.id) ? parsed.id : getNextId();
+      parsed.id = parsed.id && !existingSchemas.some((s) => s.id === parsed.id)
+        ? parsed.id
+        : getNextId();
 
       onImport(parsed);
     } catch (e: any) {
@@ -53,12 +53,14 @@ export default function ImportSchema({ onImport, onCancel, existingSchemas = [] 
         style={{ width: "100%", height: "200px", marginBottom: "1rem" }}
       />
       <div className="modal-actions">
-        <button onClick={handleImportJSON} style={{ backgroundColor: "#03e4c9ff", color: "#fff" }}>
+        {/* Primary button for Import */}
+        <Button variant="normal" onClick={handleImportJSON}>
           Import
-        </button>
-        <button onClick={onCancel} style={{ backgroundColor: "#c0c0c0ff", color: "#fff" }}>
+        </Button>
+        {/* Gray button for Back */}
+        <Button variant="gray" onClick={onCancel}>
           Back
-        </button>
+        </Button>
       </div>
     </>
   );

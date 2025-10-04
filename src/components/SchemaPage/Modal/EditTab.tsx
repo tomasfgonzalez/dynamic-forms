@@ -3,6 +3,7 @@ import type { Schema, SchemaField } from "../../../types/schema";
 import { useSchemaFields } from "../../../hooks/SchemaPage/useManageFields";
 import { useSchemaName } from "../../../hooks/SchemaPage/useSchemaName";
 import "../CreateModal.css";
+import Button from "../../Button";
 
 interface Props {
   editingSchema: Schema | null;
@@ -28,24 +29,18 @@ export default function CreateFromScratch({ editingSchema, existingSchemas, onSa
       return alert("A schema with this name already exists");
     }
 
-    // Map fields to match example structure
     const mappedFields: SchemaField[] = fields.map(f => {
       const field: SchemaField = { name: f.name, type: f.type };
-
       if (f.type === "number" || f.type === "date") {
         const min = f.range?.min ?? "";
         const max = f.range?.max ?? "";
-
-        // Only add range if min/max are defined and not both empty/zero
         if (!((min === "" || min === 0) && (max === "" || max === 0))) {
           field.range = { min, max };
         }
       }
-
       if (f.type === "select") {
         field.options = f.options ?? [""];
       }
-
       return field;
     });
 
@@ -150,8 +145,8 @@ export default function CreateFromScratch({ editingSchema, existingSchemas, onSa
                         updateField(index, "options", newOptions);
                       }}
                     />
-                    <button
-                      type="button"
+                    <Button
+                      variant="gray"
                       onClick={() => {
                         if (window.confirm("Remove this option?")) {
                           const newOptions = field.options!.filter((_, i) => i !== optIndex);
@@ -160,35 +155,36 @@ export default function CreateFromScratch({ editingSchema, existingSchemas, onSa
                       }}
                     >
                       X
-                    </button>
+                    </Button>
                   </div>
                 ))}
-                <button
-                  type="button"
-                  onClick={() => {
-                    const newOptions = field.options ? [...field.options, ""] : [""];
-                    updateField(index, "options", newOptions);
-                  }}
-                >
+                <Button variant="normal" onClick={() => {
+                  const newOptions = field.options ? [...field.options, ""] : [""];
+                  updateField(index, "options", newOptions);
+                }}>
                   + Add Option
-                </button>
+                </Button>
               </div>
             )}
 
-            <button type="button" onClick={() => handleRemoveField(index)}>
+            <Button variant="remove" onClick={() => handleRemoveField(index)}>
               Remove
-            </button>
+            </Button>
           </div>
         ))}
 
-        <button className="add-field-button" onClick={() => addField("text")}>
+        <Button variant="normal" onClick={() => addField("text")}>
           + Add Field
-        </button>
+        </Button>
       </div>
 
       <div className="modal-actions">
-        <button onClick={handleSave}>Save</button>
-        <button onClick={onCancel}>Cancel</button>
+        <Button variant="normal" onClick={handleSave}>
+          Save
+        </Button>
+        <Button variant="gray" onClick={onCancel}>
+          Cancel
+        </Button>
       </div>
     </>
   );
