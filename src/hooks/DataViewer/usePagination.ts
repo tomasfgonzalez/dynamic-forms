@@ -4,7 +4,7 @@ import type { Row, Schema } from "../../types/schema";
 export function usePagination(
   rows: Row[],
   selectedSchema: Schema | null,
-  rowsPerPage = 10
+  rowsPerPage: number = 10 // static
 ) {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -49,5 +49,14 @@ export function usePagination(
     setCurrentPage(page);
   };
 
-  return { search, setSearch, filteredRows, paginatedRows, currentPage, totalPages, goToPage };
+  return {
+    search,
+    setSearch,
+    filteredRows,
+    paginatedRows,
+    currentPage,
+    totalPages,
+    goToPage,
+  };
 }
+
