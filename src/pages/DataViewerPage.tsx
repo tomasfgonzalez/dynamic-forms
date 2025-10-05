@@ -43,14 +43,17 @@ const DataViewerPage: React.FC = () => {
   return (
     <div className="form-page-container">
       {schemas.length === 0 && (
-        <h1 className={`form-page-title ${fadeIn ? "fade-in" : ""}`}>Form Viewer</h1>
-      )}
-
-      {schemas.length === 0 && (
-        <div className={`no-schemas-message ${fadeIn ? "fade-in" : ""}`}>
-          <p>You don’t have any schemas yet. Click the button to create one and start managing your data!</p>
-          <Button variant="hero" onClick={() => navigate("/schemas")}>Go to Schemas</Button>
-        </div>
+        <>
+          <h1 className={`form-page-title ${fadeIn ? "fade-in" : ""}`}>
+            Form Viewer
+          </h1>
+          <div className={`no-schemas-message ${fadeIn ? "fade-in" : ""}`}>
+            <p>Select a schema to view and manage your data. If none exists, create one first!</p>
+            <Button variant="hero" onClick={() => navigate("/schemas")}>
+              Go to Schemas
+            </Button>
+          </div>
+        </>
       )}
 
       {schemas.length > 0 && selectedSchema && (
@@ -125,9 +128,15 @@ const DataViewerPage: React.FC = () => {
               </>
             ) : (
               <>
-                <Button variant="normal" onClick={handleSave}>Save Changes</Button>
-                <Button variant="gray" onClick={handleCancel}>Cancel Changes</Button>
-                <Button variant="normal" onClick={addRow}>Add Row</Button>
+                <Button variant="normal" onClick={handleSave}>
+                  Save Changes
+                </Button>
+                <Button variant="gray" onClick={handleCancel}>
+                  Cancel Changes
+                </Button>
+                <Button variant="normal" onClick={addRow}>
+                  Add Row
+                </Button>
               </>
             )}
           </div>

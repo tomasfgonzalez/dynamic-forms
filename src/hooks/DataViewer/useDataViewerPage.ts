@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import { useSchemas } from "../SchemaPage/useSchemas";
 import type { Schema, Row } from "../../types/schema";
 import { useSchemaSelection } from "./useSchemaSelection";
@@ -16,20 +15,26 @@ export const useDataViewerPage = () => {
   // rows CRUD
   const { rows, setRows, addRow, insertRow, deleteRow, updateCell } = useRows({ selectedSchema, saveSchemaData });
 
-  // search & pagination
-  const { search, setSearch, filteredRows, currentPage, totalPages, goToPage } = usePagination(rows, selectedSchema);
-
   // edit mode
-  const { editMode, handleEnterEdit, handleSave, handleCancel, showErrors } = useEditMode(
-  filteredRows,
-  setRows,
-  selectedSchema
-);
+  const { editMode, handleEnterEdit, handleSave, handleCancel } = useEditMode(rows, setRows);
+
+  // static rows per page
+  const rowsPerPage = 10;
+
+  // search & pagination
+  const {
+    search,
+    setSearch,
+    filteredRows,
+    paginatedRows,
+    currentPage,
+    totalPages,
+    goToPage,
+  } = usePagination(rows, selectedSchema, rowsPerPage);
 
   // column navigation
   const [colStart, setColStart] = useState(0);
   const colsPerPage = 10;
-  const rowsPerPage = 10;
 
   return {
     schemas,
@@ -38,6 +43,7 @@ export const useDataViewerPage = () => {
     setSelectedSchemaId,
     rows,
     filteredRows,
+    paginatedRows,
     search,
     setSearch,
     currentPage,
