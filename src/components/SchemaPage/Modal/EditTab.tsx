@@ -137,11 +137,13 @@ export default function CreateFromScratch({
 
   return (
     <>
+      
+
+      <h2>{editingSchema ? "Edit Schema" : "Create From Scratch"}</h2>
+
       {editingSchema && <p style={{ color: "red", fontStyle: "italic" }}>
         Warning: Editing fields will modify existing data in memory.
       </p>}
-
-      <h2>{editingSchema ? "Edit Schema" : "Create From Scratch"}</h2>
 
       <div className="schema-name-container">
         <label>Name of the schema:</label>
