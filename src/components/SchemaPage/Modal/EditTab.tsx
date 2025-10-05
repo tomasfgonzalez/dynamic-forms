@@ -50,7 +50,6 @@ export default function CreateFromScratch({
     const mappedFields: SchemaField[] = fields.map((f) => {
       const field: SchemaField = { name: f.name, type: f.type };
 
-      // Apply range for text, number, or date
       if (f.type === "text" || f.type === "number" || f.type === "date") {
         const min = f.range?.min ?? "";
         const max = f.range?.max ?? "";
@@ -77,6 +76,7 @@ export default function CreateFromScratch({
     const oldName = fields[index].name;
     updateField(index, "name", newName);
 
+    // Update data silently when renaming fields
     if (editingSchema?.data && oldName && newName && oldName !== newName) {
       const updatedData = editingSchema.data.map((row) => {
         if (Object.prototype.hasOwnProperty.call(row, oldName)) {
@@ -137,6 +137,10 @@ export default function CreateFromScratch({
 
   return (
     <>
+      {editingSchema && <p style={{ color: "red", fontStyle: "italic" }}>
+        Warning: Editing fields will modify existing data in memory.
+      </p>}
+
       <h2>{editingSchema ? "Edit Schema" : "Create From Scratch"}</h2>
 
       <div className="schema-name-container">
@@ -184,7 +188,7 @@ export default function CreateFromScratch({
                   type={field.type === "text" ? "number" : field.type}
                   placeholder={field.type === "text" ? "Min length" : "Min value"}
                   value={field.range?.min ?? ""}
-                  min={field.type === "text" ? 0 : undefined} // Only positive for text
+                  min={field.type === "text" ? 0 : undefined}
                   onChange={(e) => {
                     let val: any = e.target.value;
                     if (field.type === "text") val = val === "" ? "" : Math.max(0, Number(val));
@@ -195,7 +199,7 @@ export default function CreateFromScratch({
                   type={field.type === "text" ? "number" : field.type}
                   placeholder={field.type === "text" ? "Max length" : "Max value"}
                   value={field.range?.max ?? ""}
-                  min={field.type === "text" ? 0 : undefined} // Only positive for text
+                  min={field.type === "text" ? 0 : undefined}
                   onChange={(e) => {
                     let val: any = e.target.value;
                     if (field.type === "text") val = val === "" ? "" : Math.max(0, Number(val));
@@ -214,16 +218,43 @@ export default function CreateFromScratch({
                       value={opt}
                       onChange={(e) => {
                         const newOptions = [...field.options!];
-                        newOptions[optIndex] = e.target.value;
+                        const oldValue = newOptions[optIndex];
+                        const newValue = e.target.value;
+                        newOptions[optIndex] = newValue;
                         updateField(index, "options", newOptions);
+
+                        // Update data for this select field silently
+                        if (editingSchema?.data) {
+                          const updatedData = editingSchema.data.map((row) => {
+                            if (row[field.name] === oldValue) {
+                              return { ...row, [field.name]: newValue };
+                            }
+                            return row;
+                          });
+                          editingSchema.data = updatedData;
+                        }
                       }}
                     />
                     <Button
                       variant="gray"
                       onClick={() => {
-                        if (window.confirm("Remove this option?")) {
+                        if (window.confirm("Remove this option? All data with this value will be deleted.")) {
+                          const valueToDelete = field.options![optIndex];
                           const newOptions = field.options!.filter((_, i) => i !== optIndex);
                           updateField(index, "options", newOptions);
+
+                          // Remove data entries with this value
+                          if (editingSchema?.data) {
+                            const updatedData = editingSchema.data.map((row) => {
+                              if (row[field.name] === valueToDelete) {
+                                const newRow = { ...row };
+                                delete newRow[field.name];
+                                return newRow;
+                              }
+                              return row;
+                            });
+                            editingSchema.data = updatedData;
+                          }
                         }
                       }}
                     >
