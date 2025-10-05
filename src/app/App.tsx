@@ -1,6 +1,6 @@
 // src/app/App.tsx
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 
 // Pages
 import HomePage from "../pages/HomePage";
@@ -14,7 +14,7 @@ import "./App.css";
 
 const App: React.FC = () => {
   return (
-    <Router basename={process.env.PUBLIC_URL}>
+    <Router>
       <div className="app-background">
         <Navbar />
         <Routes>
@@ -29,4 +29,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
