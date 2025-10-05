@@ -62,5 +62,6 @@ export const useDataViewerPage = () => {
     handleEnterEdit,
     handleSave,
     handleCancel,
+    showErrors, // <-- add here
   };
 };

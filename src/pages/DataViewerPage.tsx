@@ -37,6 +37,7 @@ const DataViewerPage: React.FC = () => {
     handleEnterEdit,
     handleSave,
     handleCancel,
+    showErrors, // <-- make sure to pass this
   } = useDataViewerPage();
 
   return (
@@ -69,9 +70,7 @@ const DataViewerPage: React.FC = () => {
               }}
             >
               {schemas.map((s) => (
-                <option key={s.id} value={s.id}>
-                  {s.name}
-                </option>
+                <option key={s.id} value={s.id}>{s.name}</option>
               ))}
             </select>
           </div>
@@ -107,6 +106,7 @@ const DataViewerPage: React.FC = () => {
               editMode={editMode}
               colStart={colStart}
               colsPerPage={colsPerPage}
+              showErrors={showErrors} // <-- fix
             />
           ) : (
             <div className={`no-fields-message ${fadeIn ? "fade-in" : ""}`}>
@@ -117,14 +117,14 @@ const DataViewerPage: React.FC = () => {
           <div className="edit-buttons">
             {!editMode ? (
               <>
-                <Button variant="normal" onClick={handleEnterEdit}>
-                  Edit
-                </Button>
-                <ExportCSVButton
-                  data={filteredRows}
-                  fields={selectedSchema.fields}
-                  filename={`${selectedSchema.name.replace(/\s+/g, "_")}_data.csv`}
-                />
+                <Button variant="normal" onClick={handleEnterEdit}>Edit</Button>
+                <div>
+                  <ExportCSVButton
+                    data={filteredRows}
+                    fields={selectedSchema.fields}
+                    filename={`${selectedSchema.name.replace(/\s+/g, "_")}_data.csv`}
+                  />
+                </div>
               </>
             ) : (
               <>
