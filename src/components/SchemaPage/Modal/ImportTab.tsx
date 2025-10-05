@@ -1,7 +1,8 @@
+// src/components/SchemaPage/ImportSchema.tsx
 import React, { useState } from "react";
 import "./../CreateModal.css";
 import type { Schema } from "../../../types/schema";
-import Button from "../../Button"; // reusable button
+import Button from "../../Button";
 
 interface ImportSchemaProps {
   onImport: (schema: Schema) => void;
@@ -12,11 +13,16 @@ interface ImportSchemaProps {
 export default function ImportSchema({ onImport, onCancel, existingSchemas = [] }: ImportSchemaProps) {
   const [importedJSON, setImportedJSON] = useState("");
 
-  // Find next free numeric ID based on existingSchemas + localStorage
-  const getNextId = (): string => {
+  // Get all schemas from localStorage + existingSchemas
+  const getAllSchemas = (): Schema[] => {
     const stored = localStorage.getItem("schemas");
     const storedSchemas: Schema[] = stored ? JSON.parse(stored) : [];
-    const allSchemas = [...existingSchemas, ...storedSchemas];
+    return [...existingSchemas, ...storedSchemas];
+  };
+
+  // Find next free numeric ID
+  const getNextId = (): string => {
+    const allSchemas = getAllSchemas();
     const existingIds = allSchemas.map(s => Number(s.id)).filter(n => !isNaN(n));
 
     let nextId = 1;
@@ -33,7 +39,23 @@ export default function ImportSchema({ onImport, onCancel, existingSchemas = [] 
         return;
       }
 
-      parsed.id = parsed.id && !existingSchemas.some((s) => s.id === parsed.id)
+      // ✅ Check if name already exists in localStorage or existingSchemas
+      const allSchemas = getAllSchemas();
+      if (allSchemas.some((s) => s.name.toLowerCase() === parsed.name.toLowerCase())) {
+        alert(`A schema with the name "${parsed.name}" already exists.`);
+        return;
+      }
+
+      // Validate that all fields are of allowed types
+      const allowedTypes = ["text", "number", "checkbox", "select", "date"];
+      const invalidField = parsed.fields.find(f => !allowedTypes.includes(f.type));
+      if (invalidField) {
+        alert(`Invalid field type: "${invalidField.type}". Allowed types are: ${allowedTypes.join(", ")}`);
+        return;
+      }
+
+      // Assign ID
+      parsed.id = parsed.id && !allSchemas.some((s) => s.id === parsed.id)
         ? parsed.id
         : getNextId();
 
@@ -46,6 +68,9 @@ export default function ImportSchema({ onImport, onCancel, existingSchemas = [] 
   return (
     <>
       <h2>Import Schema JSON</h2>
+      <p style={{ marginBottom: "0.5rem", fontStyle: "italic", color: "#555" }}>
+        Note: Schemas only support fields of type <strong>text, number, checkbox, select, date</strong>.
+      </p>
       <textarea
         value={importedJSON}
         onChange={(e) => setImportedJSON(e.target.value)}
@@ -53,11 +78,9 @@ export default function ImportSchema({ onImport, onCancel, existingSchemas = [] 
         style={{ width: "100%", height: "200px", marginBottom: "1rem" }}
       />
       <div className="modal-actions">
-        {/* Primary button for Import */}
         <Button variant="normal" onClick={handleImportJSON}>
           Import
         </Button>
-        {/* Gray button for Back */}
         <Button variant="gray" onClick={onCancel}>
           Back
         </Button>

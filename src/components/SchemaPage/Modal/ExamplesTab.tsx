@@ -51,12 +51,29 @@ interface Props {
 }
 
 export default function ExampleSchemas({ onSelect, onCancel }: Props) {
+  const handleSelect = (schema: Schema) => {
+    // Check localStorage
+    const stored = localStorage.getItem("schemas");
+    const storedSchemas: Schema[] = stored ? JSON.parse(stored) : [];
+
+    const nameExists = storedSchemas.some(
+      (s) => s.name.toLowerCase() === schema.name.toLowerCase()
+    );
+
+    if (nameExists) {
+      alert(`A schema with the name "${schema.name}" already exists in local storage.`);
+      return;
+    }
+
+    onSelect(schema);
+  };
+
   return (
     <>
       <h2>Try Our Examples</h2>
       <div className="examples-list">
         {exampleSchemas.map((ex) => (
-          <Button key={ex.id} variant="normal" onClick={() => onSelect(ex)}>
+          <Button key={ex.id} variant="normal" onClick={() => handleSelect(ex)}>
             {ex.name}
           </Button>
         ))}
@@ -69,4 +86,3 @@ export default function ExampleSchemas({ onSelect, onCancel }: Props) {
     </>
   );
 }
-

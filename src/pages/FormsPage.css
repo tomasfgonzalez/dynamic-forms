@@ -60,11 +60,18 @@ button[type="submit"] {
   background-color: #3462fa;
   color: white;
   cursor: pointer;
+  transition: background 0.2s ease;
 }
 
+/* Disabled button */
 button[type="submit"]:disabled {
   background-color: #999;
   cursor: not-allowed;
+}
+
+/* Hover effect only for enabled button */
+button[type="submit"]:not(:disabled):hover {
+  background-color: #2750c7;
 }
 
 /* Make checkboxes bigger */
@@ -75,4 +82,3 @@ button[type="submit"]:disabled {
   vertical-align: middle;
   margin-left: 0.5rem;
 }
-

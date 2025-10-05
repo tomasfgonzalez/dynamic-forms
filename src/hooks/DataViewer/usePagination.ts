@@ -4,7 +4,7 @@ import type { Row, Schema } from "../../types/schema";
 export function usePagination(
   rows: Row[],
   selectedSchema: Schema | null,
-  rowsPerPage: number = 10 // static
+  rowsPerPage: number // required, comes from useDataViewerPage
 ) {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -39,8 +39,7 @@ export function usePagination(
   // slice rows for current page
   const paginatedRows = useMemo(() => {
     const start = (currentPage - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-    return filteredRows.slice(start, end);
+    return filteredRows.slice(start, start + rowsPerPage);
   }, [filteredRows, currentPage, rowsPerPage]);
 
   // navigate pages
@@ -49,14 +48,5 @@ export function usePagination(
     setCurrentPage(page);
   };
 
-  return {
-    search,
-    setSearch,
-    filteredRows,
-    paginatedRows,
-    currentPage,
-    totalPages,
-    goToPage,
-  };
+  return { search, setSearch, filteredRows, paginatedRows, currentPage, totalPages, goToPage };
 }
-

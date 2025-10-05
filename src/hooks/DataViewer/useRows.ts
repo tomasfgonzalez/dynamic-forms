@@ -8,17 +8,21 @@ interface UseRowsProps {
 
 export function useRows({ selectedSchema, saveSchemaData }: UseRowsProps) {
   const [rows, setRows] = useState<Row[]>([]);
+  const [tempRows, setTempRows] = useState<Row[]>([]); // for editing mode
 
   // Load rows when schema changes
   useEffect(() => {
     if (!selectedSchema) {
       setRows([]);
+      setTempRows([]);
       return;
     }
     const initial =
       selectedSchema.data ??
       JSON.parse(localStorage.getItem(`data-${selectedSchema.id}`) || "[]");
-    setRows(Array.isArray(initial) ? initial : []);
+    const initialRows = Array.isArray(initial) ? initial : [];
+    setRows(initialRows);
+    setTempRows(initialRows);
   }, [selectedSchema]);
 
   const persist = (schemaId: string | number, data: Row[]) => {
@@ -28,11 +32,6 @@ export function useRows({ selectedSchema, saveSchemaData }: UseRowsProps) {
     } catch {
       localStorage.setItem(`data-${schemaId}`, JSON.stringify(data));
     }
-  };
-
-  const replaceRows = (newRows: Row[]) => {
-    setRows(newRows);
-    if (selectedSchema) persist(selectedSchema.id, newRows);
   };
 
   const createEmptyRow = (): Row => {
@@ -45,28 +44,28 @@ export function useRows({ selectedSchema, saveSchemaData }: UseRowsProps) {
     return row;
   };
 
-  const addRow = () => {
+  // ---------- Temp editing functions ----------
+  const addTempRow = () => {
     if (!selectedSchema) return;
-    const newRows = [...rows, createEmptyRow()];
-    replaceRows(newRows);
+    setTempRows([...tempRows, createEmptyRow()]);
   };
 
-  const insertRow = (index: number) => {
+  const insertTempRow = (index: number) => {
     if (!selectedSchema) return;
-    const newRows = [...rows.slice(0, index), createEmptyRow(), ...rows.slice(index)];
-    replaceRows(newRows);
+    const newRows = [...tempRows.slice(0, index), createEmptyRow(), ...tempRows.slice(index)];
+    setTempRows(newRows);
   };
 
-  const deleteRow = (index: number) => {
+  const deleteTempRow = (index: number) => {
     if (!selectedSchema) return;
-    const newRows = [...rows];
+    const newRows = [...tempRows];
     newRows.splice(index, 1);
-    replaceRows(newRows);
+    setTempRows(newRows);
   };
 
-  const updateCell = (rowIndex: number, fieldName: string, value: string | number | boolean) => {
+  const updateTempCell = (rowIndex: number, fieldName: string, value: string | number | boolean) => {
     if (!selectedSchema) return;
-    const newRows = [...rows];
+    const newRows = [...tempRows];
     const field = selectedSchema.fields.find((f) => f.name === fieldName);
     if (field?.type === "number") {
       if (value === "") newRows[rowIndex][fieldName] = "";
@@ -77,8 +76,28 @@ export function useRows({ selectedSchema, saveSchemaData }: UseRowsProps) {
     } else {
       newRows[rowIndex][fieldName] = value;
     }
-    replaceRows(newRows);
+    setTempRows(newRows);
   };
 
-  return { rows, setRows: replaceRows, addRow, insertRow, deleteRow, updateCell };
+  // ---------- Commit edits ----------
+  const saveChanges = () => {
+    setRows(tempRows);
+    if (selectedSchema) persist(selectedSchema.id, tempRows);
+  };
+
+  const cancelChanges = () => {
+    setTempRows(rows); // revert temp to last saved
+  };
+
+  return {
+    rows,         // actual saved rows
+    tempRows,     // editing rows
+    setRows,      // only use to set rows programmatically
+    addTempRow,
+    insertTempRow,
+    deleteTempRow,
+    updateTempCell,
+    saveChanges,
+    cancelChanges,
+  };
 }

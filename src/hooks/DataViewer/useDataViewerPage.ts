@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import { useSchemas } from "../SchemaPage/useSchemas";
 import type { Schema, Row } from "../../types/schema";
 import { useSchemaSelection } from "./useSchemaSelection";
@@ -12,48 +13,61 @@ export const useDataViewerPage = () => {
   // schema selection
   const { selectedSchemaId, setSelectedSchemaId, selectedSchema } = useSchemaSelection(schemas);
 
-  // rows CRUD
-  const { rows, setRows, addRow, insertRow, deleteRow, updateCell } = useRows({ selectedSchema, saveSchemaData });
+  // rows CRUD (updated for tempRows)
+  const {
+    rows,       // actual saved rows
+    tempRows,   // temporary rows for editing
+    addTempRow,
+    insertTempRow,
+    deleteTempRow,
+    updateTempCell,
+    saveChanges,
+    cancelChanges,
+  } = useRows({ selectedSchema, saveSchemaData });
 
-  // edit mode
-  const { editMode, handleEnterEdit, handleSave, handleCancel } = useEditMode(rows, setRows);
 
-  // static rows per page
+  // column navigation
+  const [colStart, setColStart] = useState(0);
+  const colsPerPage = 8;
   const rowsPerPage = 10;
 
-  // search & pagination
+
+  // search & pagination works on tempRows if editing, otherwise on rows
   const {
     search,
     setSearch,
     filteredRows,
-    paginatedRows,
     currentPage,
     totalPages,
     goToPage,
-  } = usePagination(rows, selectedSchema, rowsPerPage);
+  } = usePagination(tempRows, selectedSchema, rowsPerPage);
 
-  // column navigation
-  const [colStart, setColStart] = useState(0);
-  const colsPerPage = 10;
+  // edit mode
+  const { editMode, handleEnterEdit, handleSave, handleCancel, showErrors } = useEditMode(
+    tempRows,
+    saveChanges,     // commit tempRows only on save
+    cancelChanges,   // revert tempRows on cancel
+    selectedSchema
+  );
+
 
   return {
     schemas,
     selectedSchema,
     selectedSchemaId,
     setSelectedSchemaId,
-    rows,
+    rows,            // actual saved rows
+    tempRows,        // editing rows
     filteredRows,
-    paginatedRows,
     search,
     setSearch,
     currentPage,
     totalPages,
-    addRow,
-    insertRow,
-    deleteRow,
-    updateCell,
+    addRow: addTempRow,
+    insertRow: insertTempRow,
+    deleteRow: deleteTempRow,
+    updateCell: updateTempCell,
     goToPage,
-    setRows,
     colStart,
     setColStart,
     colsPerPage,
@@ -62,5 +76,8 @@ export const useDataViewerPage = () => {
     handleEnterEdit,
     handleSave,
     handleCancel,
+    showErrors,
+    saveChanges,
+    cancelChanges,
   };
 };

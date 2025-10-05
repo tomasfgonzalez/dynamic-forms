@@ -1,204 +1,204 @@
-/* ================================
-   Global Theme Variables
-================================ */
-:root {
-  --primary: #03e4c9;
-  --primary-hover: #02c3a3;
-  --neutral: #c0c0c0;
-  --neutral-hover: #646464;
-  --text-light: #555;
-  --border-color: #ccc;
-  --bg-light: #f5f5f5;
-}
+  /* ================================
+    Global Theme Variables
+  ================================ */
+  :root {
+    --primary: #03e4c9;
+    --primary-hover: #02c3a3;
+    --neutral: #c0c0c0;
+    --neutral-hover: #646464;
+    --text-light: #555;
+    --border-color: #ccc;
+    --bg-light: #f5f5f5;
+  }
 
-/* ================================
-   Modal Overlay & Content
-================================ */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.35);
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 5vh 1rem;
-  z-index: 1000;
-  overflow-y: auto;
-}
+  /* ================================
+    Modal Overlay & Content
+  ================================ */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.35);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 5vh 1rem;
+    z-index: 1000;
+    overflow-y: auto;
+  }
 
-.modal-content {
-  position: relative;
-  background: #fff;
-  padding: 2rem;
-  border-radius: 12px;
-  width: clamp(320px, 80%, 800px);
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
-  opacity: 0;
-  transform: translateY(-15px) scale(0.98);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  z-index: 1001;
-}
+  .modal-content {
+    position: relative;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    width: clamp(320px, 80%, 800px);
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    opacity: 0;
+    transform: translateY(-15px) scale(0.98);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    z-index: 1001;
+  }
 
-.modal-content.fade-in {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
+  .modal-content.fade-in {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 
-.modal-content h2 {
-  margin: 0 0 1.5rem 0;
-  font-size: 1.8rem;
-  font-weight: 600;
-}
+  .modal-content h2 {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
 
-/* ================================
-   Modal Options (Landing)
-================================ */
-.modal-options {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin: 1rem 0;
-}
+  /* ================================
+    Modal Options (Landing)
+  ================================ */
+  .modal-options {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+  }
 
-.option-card {
-  flex: 1 1 200px;
-  background: var(--bg-light);
-  border-radius: 10px;
-  padding: 1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  min-width: 180px;
-}
+  .option-card {
+    flex: 1 1 200px;
+    background: var(--bg-light);
+    border-radius: 10px;
+    padding: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    min-width: 180px;
+  }
 
-.option-card:hover,
-.option-card:focus-visible {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-  outline: 2px solid var(--primary);
-}
+  .option-card:hover,
+  .option-card:focus-visible {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    outline: 2px solid var(--primary);
+  }
 
-.option-icon {
-  font-size: 2rem;
-  margin-right: 0.8rem;
-}
+  .option-icon {
+    font-size: 2rem;
+    margin-right: 0.8rem;
+  }
 
-.option-text strong {
-  display: block;
-  font-size: 1rem;
-  margin-bottom: 0.2rem;
-}
+  .option-text strong {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+  }
 
-.option-text p {
-  margin: 0;
-  font-size: 0.9rem;
-  color: var(--text-light);
-}
+  .option-text p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-light);
+  }
 
-/* ================================
-   Schema Name Container
-================================ */
-.schema-name-container {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 25px;
-  padding-bottom: 10px;
-  border-bottom: 1.5px solid var(--border-color);
-}
+  /* ================================
+    Schema Name Container
+  ================================ */
+  .schema-name-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 1.5px solid var(--border-color);
+  }
 
-.schema-name-container label {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 6px;
-}
+  .schema-name-container label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
 
-.schema-name-container input {
-  width: 100%;
-  font-size: 1rem;
-  padding: 0.6rem;
-  border: 1.5px solid var(--border-color);
-  border-radius: 6px;
-  box-sizing: border-box;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
+  .schema-name-container input {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.6rem;
+    border: 1.5px solid var(--border-color);
+    border-radius: 6px;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
 
-.schema-name-container input:focus-visible {
-  border-color: var(--primary-hover);
-  box-shadow: 0 0 4px rgba(3, 228, 201, 0.4);
-  outline: none;
-}
+  .schema-name-container input:focus-visible {
+    border-color: var(--primary-hover);
+    box-shadow: 0 0 4px rgba(3, 228, 201, 0.4);
+    outline: none;
+  }
 
-/* ================================
-   Fields
-================================ */
-.field-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 1rem;
-  flex-wrap: wrap;
-}
+  /* ================================
+    Fields
+  ================================ */
+  .field-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
 
-.field-range {
-  display: flex;
-  gap: 5px;
-}
+  .field-range {
+    display: flex;
+    gap: 5px;
+  }
 
-.field-range input {
-  width: 80px;
-  padding: 5px;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-}
+  .field-range input {
+    width: 80px;
+    padding: 5px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+  }
 
-.field-row input[type="text"],
-.field-row select {
-  flex: 1;
-  padding: 0.5rem;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-}
+  .field-row input[type="text"],
+  .field-row select {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+  }
 
-/* ================================
-   Example Schemas
-================================ */
-.examples-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-}
+  /* ================================
+    Example Schemas
+  ================================ */
+  .examples-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
 
-/* ================================
-   Modal Actions Container
-================================ */
-.modal-actions {
-  margin-top: 1.5rem;
-  display: flex;
-  gap: 1rem;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-}
+  /* ================================
+    Modal Actions Container
+  ================================ */
+  .modal-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
 
-/* ================================
-   Cross (Close/Delete)
-================================ */
-.delete-cross {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 1.3rem;
-  background: none;
-  border: none;
-  color: #888;
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
+  /* ================================
+    Cross (Close/Delete)
+  ================================ */
+  .delete-cross {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.3rem;
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
 
-.delete-cross:hover,
-.delete-cross:focus-visible {
-  color: var(--primary);
-  outline: none;
-}
+  .delete-cross:hover,
+  .delete-cross:focus-visible {
+    color: var(--primary);
+    outline: none;
+  }
