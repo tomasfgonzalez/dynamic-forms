@@ -1,4 +1,4 @@
-// src/App.tsx
+// src/app/App.tsx
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -10,15 +10,15 @@ import FormsPage from "../pages/FormsPage";
 
 // Components
 import Navbar from "../components/Navbar";
-import "./App.css"; 
+import "./App.css";
 
 const App: React.FC = () => {
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <div className="app-background">
         <Navbar />
         <Routes>
-          <Route path="/dynamic-forms" element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/schemas" element={<SchemasPage />} />
           <Route path="/data-viewer" element={<DataViewerPage />} />
           <Route path="/form/:schemaName" element={<FormsPage />} />
@@ -29,3 +29,4 @@ const App: React.FC = () => {
 };
 
 export default App;
+
