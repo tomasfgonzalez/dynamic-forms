@@ -1,6 +1,6 @@
-# Dynamic Forms TSX
+# Dynamic Forms
 
-A **React + TypeScript + CSS** dynamic form builder and data viewer.
+My take on a dynamic form builder and data viewer using  **React + TypeScript + CSS** .
 
 Easily create custom schemas, add fields, and manage table data with validation.
 
@@ -30,3 +30,12 @@ npm start
 ```
 
 Then open [http://localhost:3000](http://localhost:3000) in your browser.
+
+
+## How to Use
+
+1. Go to **My Schemas**.
+2. **Create** a new schema or **import** an existing one.
+3. **Select** your schema.
+4. **Submit** as many entries as you want.
+5. View and manage your data in the **Data Viewer** page.
